@@ -58,3 +58,7 @@ h3 {
     0 0 20px rgba(200,169,106,0.25),
     0 0 60px rgba(200,169,106,0.15);
 }
+
+.clip-envelope {
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+}
