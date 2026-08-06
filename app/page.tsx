@@ -1,5 +1,5 @@
-import Envelope from "@/components/sections/Envelope";
+import WeddingPage from "@/components/WeddingPage";
 
 export default function Home() {
-  return <Envelope />;
+  return <WeddingPage />;
 }

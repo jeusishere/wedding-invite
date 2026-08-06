@@ -1,6 +1,14 @@
+"use client";
+
 import { wedding } from "@/data/wedding";
 
-export default function Envelope() {
+export default function Envelope({
+  opened,
+  onOpen,
+}: {
+  opened: boolean;
+  onOpen: () => void;
+}) {
   return (
     <section className="min-h-screen flex items-center justify-center px-6">
       <div className="fade-in flex flex-col items-center text-center">
@@ -12,7 +20,10 @@ export default function Envelope() {
         <div className="relative w-[320px] h-[220px] bg-white rounded-lg shadow-xl border border-[#E8D7B0] flex items-center justify-center gold-glow">
 
           {/* Zarf kapağı */}
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-[#FAF7F2] clip-envelope" />
+          <div className={`absolute top-0 left-0 w-full h-1/2 bg-[#FAF7F2] envelope-flap ${
+            opened ? "open" : ""
+            }`}
+            />
 
           {/* Mühür */}
           <div className="z-10 w-16 h-16 rounded-full bg-[#C8A96A] flex items-center justify-center shadow-lg">
@@ -39,8 +50,11 @@ export default function Envelope() {
             {wedding.date.day} {wedding.date.month} {wedding.date.year}
         </p>
 
-        <button className="mt-10 rounded-full bg-[#B8894C] px-8 py-3 text-white transition hover:scale-105">
-          Davetiyeyi Aç
+        <button
+         onClick={onOpen}
+            className="mt-10 rounded-full bg-[#B8894C] px-8 py-3 text-white transition hover:scale-105"
+        >   
+         Davetiyeyi Aç
         </button>
 
       </div>
