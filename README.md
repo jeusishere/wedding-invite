@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💍 Wedding Invitation Website
 
-## Getting Started
+Modern, mobil uyumlu ve interaktif düğün davetiyesi web uygulaması.
 
-First, run the development server:
+---
+
+## ✨ Özellikler
+
+- 💌 Açılış zarf animasyonu
+- 📜 Dijital düğün davetiyesi
+- ⏳ Canlı geri sayım
+- 📍 Düğün konumu
+- 👨‍👩‍👧 RSVP (Katılım Durumu)
+- 📸 Misafir fotoğraf yükleme
+- 🖼️ Fotoğraf galerisi
+- 📱 Mobil uyumlu tasarım
+- ☁️ Otomatik deployment desteği
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Git
+- GitHub
+- Vercel
+
+---
+
+## 📁 Proje Yapısı
+
+```text
+app/
+components/
+│
+├── layout/
+├── sections/
+├── ui/
+└── WeddingPage.tsx
+
+data/
+hooks/
+lib/
+public/
+styles/
+types/
+```
+
+---
+
+## 🚀 Kurulum
+
+Projeyi klonlayın:
+
+```bash
+git clone <repository-url>
+```
+
+Proje klasörüne girin:
+
+```bash
+cd wedding-invite
+```
+
+Bağımlılıkları yükleyin:
+
+```bash
+npm install
+```
+
+Geliştirme sunucusunu başlatın:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+PowerShell kullanıyorsanız:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm.cmd run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tarayıcıdan açın:
 
-## Learn More
+```text
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Yayınlama
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+git add .
 
-## Deploy on Vercel
+git commit -m "Açıklayıcı commit mesajı"
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+git push
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+GitHub'a gönderilen değişiklikler, yapılandırılmışsa otomatik olarak yayınlanacaktır.
+
+---
+
+## 📅 Roadmap
+
+### Arayüz
+
+- [x] Proje kurulumu
+- [x] Next.js altyapısı
+- [x] Responsive temel tasarım
+- [ ] Premium zarf animasyonu
+- [ ] Davetiye geçiş animasyonu
+
+### İçerik
+
+- [ ] Hikaye (Story)
+- [ ] Geri sayım
+- [ ] Konum bilgisi
+
+### Katılım
+
+- [ ] RSVP sistemi
+- [ ] Davetli yönetimi
+
+### Medya
+
+- [ ] Fotoğraf yükleme
+- [ ] Galeri
+- [ ] QR Kod ile erişim
+
+### Yönetim
+
+- [ ] Yönetici paneli
+- [ ] Fotoğraf onay sistemi
+- [ ] Katılım istatistikleri
+
+---
+
+## 📄 Lisans
+
+Bu proje kişisel kullanım amacıyla geliştirilmektedir.
