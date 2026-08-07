@@ -1,18 +1,46 @@
+"use client";
+
 import React, { useState } from 'react';
+
+// Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8yhas_3Kq9jrjkYscevOLVuRQIRDa2LBg05OUdxMSPIjS8PTdskErpbJdHbBWeQw/exec";
 
 export default function RSVP() {
   const [attending, setAttending] = useState<'yes' | 'no'>('yes');
   const [guestCount, setGuestCount] = useState<number>(2);
-  const [guestName, setGuestName] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!guestName.trim()) return;
+    if (!firstName.trim() || !lastName.trim() || isSubmitting) return;
 
-    // Form gönderme işlemleri (Örn: EmailJS, Formspree veya Kendi API'niz)
-    // Şimdilik başarılı simülasyonu çalıştırıyoruz:
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          attending: attending,
+          guestCount: attending === 'yes' ? guestCount : 0,
+        }),
+      });
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('RSVP Gönderim Hatası:', error);
+      alert('Yanıtınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -37,24 +65,41 @@ export default function RSVP() {
               Yanıtınız Alındı!
             </h3>
             <p className="text-sm text-[#666] leading-relaxed max-w-xs mx-auto">
-              Yanıtınızı ilettiğiniz için teşekkür ederiz. Sizi aramızda görmek için sabırsızlanıyoruz!
+              Yanıtınız doğrudan listemize eklendi. Sizi aramızda görmek için sabırsızlanıyoruz!
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Ad Soyad */}
-            <div className="space-y-2">
-              <label className="block text-xs font-semibold tracking-widest text-[#8c8275] uppercase">
-                Adınız ve Soyadınız
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="Örn: Ahmet Yılmaz"
-                value={guestName}
-                onChange={(e) => setGuestName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#e5dfd3] bg-[#faf8f5] focus:outline-none focus:border-[#D4AF37] transition-colors text-sm"
-              />
+            
+            {/* Ad & Soyad */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold tracking-widest text-[#8c8275] uppercase">
+                  Adınız
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ahmet"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-[#e5dfd3] bg-[#faf8f5] focus:outline-none focus:border-[#D4AF37] transition-colors text-sm"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold tracking-widest text-[#8c8275] uppercase">
+                  Soyadınız
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Yılmaz"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-[#e5dfd3] bg-[#faf8f5] focus:outline-none focus:border-[#D4AF37] transition-colors text-sm"
+                />
+              </div>
             </div>
 
             {/* Katılıyor musunuz? */}
@@ -89,7 +134,7 @@ export default function RSVP() {
               </div>
             </div>
 
-            {/* Kaç kişi? (Sadece 'Evet' seçiliyse görünür) */}
+            {/* Kaç kişi? */}
             {attending === 'yes' && (
               <div className="space-y-2 animate-fade-in">
                 <label className="block text-xs font-semibold tracking-widest text-[#8c8275] uppercase">
@@ -120,9 +165,10 @@ export default function RSVP() {
             {/* Gönder Butonu */}
             <button
               type="submit"
-              className="w-full bg-[#D4AF37] hover:bg-[#b39023] text-white py-3.5 px-6 rounded-xl font-medium text-base shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 cursor-pointer mt-4"
+              disabled={isSubmitting}
+              className="w-full bg-[#D4AF37] hover:bg-[#b39023] text-white py-3.5 px-6 rounded-xl font-medium text-base shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 cursor-pointer mt-4 disabled:opacity-50"
             >
-              Gönder
+              {isSubmitting ? 'Gönderiliyor...' : 'Yanıtı Gönder'}
             </button>
           </form>
         )}
