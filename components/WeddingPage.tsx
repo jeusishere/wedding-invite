@@ -4,13 +4,13 @@ import { weddingData } from '../data/wedding';
 
 // Import section components
 import Envelope from './sections/Envelope';
-import Hero from './sections/Hero';
-import Info from './sections/Info';
-import Countdown from './sections/Countdown';
-import Location from './sections/Location';
-import Upload from './sections/Upload';
-import RSVP from './sections/RSVP';
-import Footer from './sections/Footer';
+import Hero from '@/components/sections/Hero';
+import Info from '@/components/sections/Info';
+import Countdown from '@/components/sections/Countdown';
+import Location from '@/components/sections/Location';
+import Upload from '@/components/sections/Upload';
+import RSVP from '@/components/sections/RSVP';
+import Footer from '@/components/sections/Footer';
 
 export default function WeddingPage() {
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState<boolean>(false);

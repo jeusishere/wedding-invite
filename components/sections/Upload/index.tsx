@@ -1,138 +1,169 @@
-"use client";
+'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+
+// ⚠️ BURAYA KENDİ CLOUDINARY BİLGİLERİNİ YAZ
+const CLOUD_NAME = 'd2vfvibz'; 
+const UPLOAD_PRESET = 'wedding_preset';
 
 export default function Upload() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 
-  // Galeriden dosya seçildiğinde çalışır
+  // Fotoğraflar seçildiğinde çalışır
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-      setIsSuccess(false);
-    }
+    if (!e.target.files) return;
+
+    const filesArray = Array.from(e.target.files);
+    setSelectedFiles((prev) => [...prev, ...filesArray]);
+
+    const newPreviews = filesArray.map((file) => URL.createObjectURL(file));
+    setPreviews((prev) => [...prev, ...newPreviews]);
   };
 
-  // Yükleme butonu
-  const handleUpload = async () => {
-    if (!selectedFile) return;
+  // Seçimden fotoğraf çıkarma
+  const handleRemoveImage = (index: number) => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
+  };
 
-    setIsUploading(true);
+  // Cloudinary'ye Yükleme İşlemi
+  const handleUpload = async () => {
+    if (selectedFiles.length === 0) {
+      alert('Lütfen en az bir fotoğraf seçin!');
+      return;
+    }
+
+    setUploading(true);
 
     try {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
+      // Seçilen tüm dosyaları aynı anda Cloudinary'ye gönderiyoruz
+      const uploadPromises = selectedFiles.map(async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', UPLOAD_PRESET);
 
-      // Oluşturacağımız API servisine fotoğrafı gönderiyoruz
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error('Yükleme başarısız oldu');
+        }
+
+        const data = await res.json();
+        // Cloudinary'nin döndürdüğü güvenli resim URL'si
+        return data.secure_url as string; 
       });
 
-      if (response.ok) {
-        setIsSuccess(true);
-        setSelectedFile(null);
-        setPreviewUrl(null);
-      } else {
-        alert('Fotoğraf yüklenirken bir sorun oluştu. Lütfen tekrar deneyin.');
-      }
+      // Tüm yüklemelerin bitmesini bekle
+      const urls = await Promise.all(uploadPromises);
+
+      console.log('Cloudinary Yüklenen Resim Linkleri:', urls);
+      setUploadedUrls((prev) => [...prev, ...urls]);
+
+      alert(`${urls.length} fotoğraf başarıyla yüklendi!`);
+
+      // Seçimleri temizle
+      setSelectedFiles([]);
+      setPreviews([]);
     } catch (error) {
-      console.error('Upload error:', error);
-      alert('Fotoğraf yüklenemedi.');
+      console.error('Yükleme Hatası:', error);
+      alert('Fotoğraflar yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
-      setIsUploading(false);
+      setUploading(false);
     }
   };
 
   return (
-    <section className="py-20 px-4 bg-[#f4efe6] text-[#2c2c2c] border-t border-[#e5dfd3] flex flex-col items-center justify-center text-center">
-      <div className="max-w-md w-full bg-[#fffdfa] border border-[#d4af37]/30 rounded-2xl p-6 sm:p-10 shadow-xl space-y-6">
-        
-        {/* İkon & Başlık */}
-        <div className="space-y-2">
-          <div className="w-16 h-16 bg-[#faf8f5] border border-[#d4af37]/40 rounded-full flex items-center justify-center mx-auto text-3xl shadow-xs">
-            🖼️
-          </div>
-          <span className="text-[#D4AF37] font-serif text-xs tracking-widest uppercase block">
-            Anıları Paylaşın
-          </span>
-          <h2 className="font-serif text-2xl sm:text-3xl text-[#1a1a1a]">
-            Fotoğraf Gönder
-          </h2>
-          <p className="text-xs sm:text-sm text-[#666] leading-relaxed pt-1">
-            Düğün günü galerinizde biriken güzel kareleri seçerek bizimle paylaşabilirsiniz.
-          </p>
-        </div>
+    <section className="py-12 px-4 max-w-2xl mx-auto text-center">
+      <h2 className="text-3xl font-serif font-bold mb-3">Fotoğraflarınızı Paylaşın</h2>
+      <p className="text-gray-600 mb-6 text-sm sm:text-base">
+        Düğünümüzden çektiğiniz güzel kareleri birden fazla seçerek bize gönderebilirsiniz.
+      </p>
 
-        <div className="w-12 h-[1px] bg-[#D4AF37]/50 mx-auto" />
-
-        {/* Dosya Girişi (Telefonda Doğrudan Galeriyi / Albümleri Açar) */}
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          accept="image/*"
-          className="hidden"
-        />
-
-        {/* Yükleme Durumları */}
-        {isSuccess ? (
-          <div className="bg-[#e6f4ea] border border-[#2e7d32]/30 rounded-xl p-4 text-[#2e7d32] space-y-2 animate-fade-in">
-            <span className="text-2xl block">🎉</span>
-            <p className="font-medium text-sm">Fotoğrafınız Başarıyla İletildi!</p>
-            <p className="text-xs opacity-80">Bizimle bu anı paylaştığınız için teşekkür ederiz.</p>
-            <button
-              onClick={() => setIsSuccess(false)}
-              className="mt-2 text-xs underline font-semibold cursor-pointer text-[#2e7d32]"
-            >
-              Galeriden başka bir fotoğraf daha seç
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {/* Seçilen Fotoğrafın Önizlemesi */}
-            {previewUrl ? (
-              <div className="space-y-4">
-                <div className="relative w-full aspect-square max-w-[200px] mx-auto rounded-xl overflow-hidden border-2 border-[#D4AF37] shadow-md">
-                  <img src={previewUrl} alt="Seçilen Fotoğraf" className="w-full h-full object-cover" />
-                </div>
-                
-                <div className="flex gap-2 justify-center">
-                  <button
-                    onClick={handleUpload}
-                    disabled={isUploading}
-                    className="bg-[#D4AF37] hover:bg-[#b39023] text-white px-6 py-2.5 rounded-full text-sm font-medium shadow-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
-                  >
-                    {isUploading ? 'Gönderiliyor...' : 'Fotoğrafı Gönder ✨'}
-                  </button>
-                  <button
-                    onClick={() => { setSelectedFile(null); setPreviewUrl(null); }}
-                    disabled={isUploading}
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2.5 rounded-full text-sm font-medium transition-all cursor-pointer"
-                  >
-                    İptal
-                  </button>
-                </div>
-              </div>
-            ) : (
-              /* Galeriden Seç Butonu */
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full bg-[#D4AF37] hover:bg-[#b39023] text-white font-medium py-3.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95 text-sm sm:text-base cursor-pointer flex items-center justify-center gap-2"
-              >
-                <span>🖼️ Galeriden Fotoğraf Seç</span>
-              </button>
-            )}
-          </div>
-        )}
-
+      {/* Fotoğraf Seçme Butonu */}
+      <div className="mb-6">
+        <label className="cursor-pointer inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-medium py-3 px-6 rounded-full shadow-md transition transform active:scale-95">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>Fotoğraf Seç</span>
+          <input
+            type="file"
+            accept="image/*"
+            multiple // 👈 Birden fazla fotoğraf seçimi
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
       </div>
+
+      {/* Seçilen Fotoğrafların Önizlemesi */}
+      {previews.length > 0 && (
+        <div className="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            Seçilen Fotoğraflar ({previews.length})
+          </p>
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-64 overflow-y-auto p-1">
+            {previews.map((src, index) => (
+              <div key={index} className="relative group rounded-lg overflow-hidden aspect-square border shadow-sm">
+                <img
+                  src={src}
+                  alt={`Önizleme ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-md hover:bg-red-700 transition"
+                  title="Fotoğrafı Kaldır"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Gönder Butonu */}
+      {selectedFiles.length > 0 && (
+        <button
+          onClick={handleUpload}
+          disabled={uploading}
+          className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {uploading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+              Fotoğraflar Yükleniyor...
+            </span>
+          ) : (
+            `${selectedFiles.length} Fotoğrafı Yükle ve Gönder`
+          )}
+        </button>
+      )}
+
+      {/* Yüklenen Fotoğraflar (İsteğe Bağlı Alt Kısımda Gösterme) */}
+      {uploadedUrls.length > 0 && (
+        <div className="mt-8 pt-6 border-t text-left">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Başarıyla Yüklenenler:</h3>
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+            {uploadedUrls.map((url, i) => (
+              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block aspect-square rounded-lg overflow-hidden border hover:opacity-80 transition">
+                <img src={url} alt="Yüklenen" className="w-full h-full object-cover" />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
