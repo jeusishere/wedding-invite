@@ -1,0 +1,199 @@
+.envelope-screen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#FAF7F2;
+    overflow:hidden;
+}
+
+.envelope-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.invite-text{
+    margin-bottom:30px;
+    letter-spacing:8px;
+    text-transform:uppercase;
+    color:#8A847B;
+    font-size:14px;
+}
+
+.tap-text{
+    margin-top:30px;
+    color:#8A847B;
+    font-size:14px;
+}
+
+/* ============================= */
+
+.envelope{
+
+    position:relative;
+
+    width:420px;
+    height:280px;
+
+    perspective:1800px;
+
+}
+
+/* ============================= */
+
+.envelope-back{
+
+    position:absolute;
+    inset:0;
+
+    border-radius:14px;
+
+    background:#F7F3EC;
+
+    border:1px solid #E6D6AF;
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.08);
+
+}
+
+/* ============================= */
+
+.envelope-front{
+
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+    height:58%;
+
+    background:white;
+
+    clip-path:polygon(
+        0 100%,
+        0 0,
+        50% 58%,
+        100% 0,
+        100% 100%
+    );
+
+    border-left:1px solid #E6D6AF;
+    border-right:1px solid #E6D6AF;
+    border-bottom:1px solid #E6D6AF;
+
+    z-index:5;
+
+}
+
+/* ============================= */
+
+.envelope-flap{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:58%;
+
+    background:#FBF8F2;
+
+    border:1px solid #E6D6AF;
+
+    clip-path:polygon(
+        0 0,
+        50% 100%,
+        100% 0
+    );
+
+    transform-origin:top center;
+
+    backface-visibility:hidden;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+
+    z-index:15;
+
+}
+
+/* ============================= */
+
+.seal-wrapper{
+
+    position:absolute;
+
+    left:50%;
+    top:55%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:30;
+
+}
+
+.seal{
+
+    width:76px;
+    height:76px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    background:
+        radial-gradient(circle at 30% 30%,#DABD7A,#B8894C);
+
+    color:white;
+
+    font-size:24px;
+
+    font-family:serif;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 12px 25px rgba(0,0,0,.18);
+
+    transition:.25s;
+
+}
+
+.seal:hover{
+
+    transform:scale(1.06);
+
+}
+
+.seal:active{
+
+    transform:scale(.94);
+
+}
+
+/* ============================= */
+
+@media(max-width:600px){
+
+.envelope{
+
+    width:330px;
+    height:220px;
+
+}
+
+.seal{
+
+    width:64px;
+    height:64px;
+
+    font-size:20px;
+
+}
+
+}

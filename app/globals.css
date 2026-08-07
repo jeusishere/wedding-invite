@@ -9,6 +9,8 @@
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -17,32 +19,42 @@ html {
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: hidden;
 }
+
+/* Başlıklar */
 
 h1,
 h2,
-h3 {
-  font-family: var(--font-playfair), serif;
+h3,
+h4,
+h5,
+h6 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
 }
+
+/* Yazı seçme */
 
 ::selection {
   background: var(--soft-gold);
   color: var(--foreground);
 }
 
+/* Fade In */
 
-/* Zarif giriş animasyonu */
 .fade-in {
-  animation: fadeIn 1.5s ease forwards;
+  animation: fadeIn 1.2s ease forwards;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
 
   to {
@@ -51,30 +63,31 @@ h3 {
   }
 }
 
+/* Altın Parıltı */
 
-/* Hafif altın parıltı efekti */
 .gold-glow {
   box-shadow:
-    0 0 20px rgba(200,169,106,0.25),
-    0 0 60px rgba(200,169,106,0.15);
+    0 0 25px rgba(200, 169, 106, .18),
+    0 0 60px rgba(200, 169, 106, .08);
 }
 
-.clip-envelope {
-  clip-path: polygon(0 0, 50% 100%, 100% 0);
+/* Buton Geçişleri */
+
+button {
+  transition: .25s ease;
 }
 
-.rotate-x-180 {
-  transform: rotateX(180deg);
+button:hover {
+  transform: scale(1.03);
 }
 
-.envelope-flap {
-  clip-path: polygon(0 0, 50% 100%, 100% 0);
-  transform-origin: top center;
-  transition: transform 1s ease, opacity 1s ease;
-  backface-visibility: hidden;
+button:active {
+  transform: scale(.98);
 }
 
-.envelope-flap.open {
-  transform: rotateX(180deg);
-  opacity: 0;
+/* Linkler */
+
+a {
+  color: inherit;
+  text-decoration: none;
 }

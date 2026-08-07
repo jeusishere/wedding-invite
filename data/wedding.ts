@@ -1,35 +1,37 @@
-export const wedding = {
-  bride: {
-    fullName: "Hatice Kübra Özcan",
+export const weddingData = {
+  // Kişisel Bilgiler
+  bride: "Hatice Kübra Özcan",
+  groom: "Samet Baki Tokur",
+
+  // Düğün Bilgileri
+  wedding: {
+    title: "Düğün",
+    displayDate: "15 Kasım 2026",
+    displayTime: "18.00",
+    targetDate: "2026-11-15T18:00:00+03:00",
   },
 
-  groom: {
-    fullName: "Samet Baki Tokur",
+  // Kına Gecesi Bilgileri (Tarih netleşince targetDate doldurulacak)
+  kina: {
+    title: "Kına Gecesi",
+    displayDate: "Tarih Yakında Açıklanacak",
+    displayTime: "--.--",
+    targetDate: null, // Örn tarih belli olunca: "2026-11-13T19:00:00+03:00"
   },
 
-  date: {
-    day: 15,
-    month: "Kasım",
-    year: 2026,
+  // Genel Görünen Tarih & Saat (Hero ve Ana Alanlar İçin)
+  displayDate: "15 Kasım 2026",
+  displayTime: "18.00",
+  targetDate: "2026-11-15T18:00:00+03:00",
+
+  // Mekan Bilgileri
+  location: {
+    name: "Salon Adı",
+    address: "Açık adres detayları buraya yazılacak. İlçe / İl",
+    mapsUrl: "https://maps.google.com/...",
+    embedUrl: "https://www.google.com/maps/embed?pb=...",
   },
 
-  time: "",
-  
-  venue: {
-    name: "",
-    address: "",
-    mapsUrl: "",
-  },
-
-  message:
-    "Hayatımızın en özel gününde mutluluğumuzu paylaşmanızdan büyük mutluluk duyacağız.",
-
-  theme: {
-    name: "Elegant Gold",
-    colors: {
-      background: "#FAF7F2",
-      gold: "#C8A96A",
-      text: "#2D2A26",
-    },
-  },
+  // Fotoğraf Yükleme Linki
+  driveUploadUrl: "https://drive.google.com/drive/folders/...",
 };
