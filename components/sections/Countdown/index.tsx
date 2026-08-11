@@ -1,139 +1,279 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { weddingData } from '../../../data/wedding';
+import React, { useEffect, useState } from "react";
+import { weddingData } from "../../../data/wedding";
 
-interface TimeLeft {
+type TimeLeft = {
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
-}
+};
 
 export default function Countdown() {
-  const calculateTimeLeft = (targetDateString: string | null): TimeLeft | null => {
-    if (!targetDateString) return null;
+  const calculateTimeLeft = (): TimeLeft => {
+    const target = new Date(weddingData.targetDate).getTime();
+    const now = new Date().getTime();
 
-    const difference = +new Date(targetDateString) - +new Date();
-    if (difference <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    const difference = target - now;
+
+    if (difference <= 0) {
+      return {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
 
     return {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60),
+      days: Math.floor(
+        difference / (1000 * 60 * 60 * 24)
+      ),
+
+      hours: Math.floor(
+        (difference / (1000 * 60 * 60)) % 24
+      ),
+
+      minutes: Math.floor(
+        (difference / (1000 * 60)) % 60
+      ),
+
+      seconds: Math.floor(
+        (difference / 1000) % 60
+      ),
     };
   };
 
-  const [weddingTime, setWeddingTime] = useState<TimeLeft | null>(
-    calculateTimeLeft(weddingData.wedding.targetDate)
-  );
-  const [kinaTime, setKinaTime] = useState<TimeLeft | null>(
-    calculateTimeLeft(weddingData.kina.targetDate)
-  );
+  const [timeLeft, setTimeLeft] =
+    useState<TimeLeft>(calculateTimeLeft());
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setWeddingTime(calculateTimeLeft(weddingData.wedding.targetDate));
-      setKinaTime(calculateTimeLeft(weddingData.kina.targetDate));
+      setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const formatNum = (num: number) => String(num).padStart(2, '0');
-
-  // Tekil Sayaç Kutuları Bileşeni
-  const RenderTimerGrid = ({ time }: { time: TimeLeft }) => (
-    <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full">
-      {[
-        { label: 'GÜN', val: formatNum(time.days) },
-        { label: 'SAAT', val: formatNum(time.hours) },
-        { label: 'DK', val: formatNum(time.minutes) },
-        { label: 'SN', val: formatNum(time.seconds) },
-      ].map((item, idx) => (
-        <div
-          key={idx}
-          className="bg-[#faf8f5] border border-[#d4af37]/30 rounded-lg p-2 sm:p-3 text-center shadow-xs"
-        >
-          <span className="font-serif text-xl sm:text-3xl font-bold text-[#1a1a1a] block">
-            {item.val}
-          </span>
-          <span className="text-[9px] sm:text-[10px] font-semibold tracking-wider text-[#8c8275] uppercase mt-1 block">
-            {item.label}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
+  const timeBoxes = [
+    {
+      value: timeLeft.days,
+      label: "Gün",
+    },
+    {
+      value: timeLeft.hours,
+      label: "Saat",
+    },
+    {
+      value: timeLeft.minutes,
+      label: "Dakika",
+    },
+    {
+      value: timeLeft.seconds,
+      label: "Saniye",
+    },
+  ];
 
   return (
-    <section className="py-16 px-4 bg-[#f4efe6] text-[#2c2c2c] border-y border-[#e5dfd3] flex flex-col items-center">
-      {/* Başlık */}
-      <div className="text-center mb-10">
-        <span className="text-[#D4AF37] font-serif text-sm tracking-widest uppercase">
-          Heyecanlı Bekleyiş
-        </span>
-        <h2 className="font-serif text-3xl sm:text-4xl text-[#1a1a1a] mt-1">
-          Geri Sayım
+    <section
+      id="countdown-section"
+      className="
+        relative
+        overflow-hidden
+        bg-[#FAF7F2]
+        px-6
+        py-24
+        sm:py-28
+      "
+    >
+      {/* Dekoratif arka plan */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-1/2
+          h-[500px]
+          w-[500px]
+          -translate-x-1/2
+          -translate-y-1/2
+          rounded-full
+          border
+          border-[#C8A96A]/10
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-1/2
+          h-[360px]
+          w-[360px]
+          -translate-x-1/2
+          -translate-y-1/2
+          rounded-full
+          border
+          border-[#C8A96A]/10
+        "
+      />
+
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          max-w-4xl
+          text-center
+        "
+      >
+        {/* Süsleme */}
+
+        <div className="mb-5 flex items-center justify-center gap-3">
+          <span className="h-px w-10 bg-[#C8A96A]/40" />
+
+          <span className="font-serif text-lg text-[#C8A96A]">
+            ❖
+          </span>
+
+          <span className="h-px w-10 bg-[#C8A96A]/40" />
+        </div>
+
+        {/* Başlık */}
+
+        <p
+          className="
+            mb-3
+            text-xs
+            uppercase
+            tracking-[0.35em]
+            text-[#8A8379]
+          "
+        >
+          BÜYÜK GÜNE KALAN ZAMAN
+        </p>
+
+        <h2
+          className="
+            font-serif
+            text-4xl
+            font-light
+            text-[#2D2A26]
+            sm:text-5xl
+          "
+        >
+          Buluşmamıza Çok Az Kaldı
         </h2>
-        <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-3" />
-      </div>
 
-      {/* İkili Kart Yapısı (Kına & Düğün) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl px-2">
-        
-        {/* KINA GECESİ KARTI */}
-        <div className="bg-[#fffdfa] border border-[#d4af37]/30 rounded-2xl p-6 shadow-md flex flex-col justify-between items-center text-center relative overflow-hidden">
-          <div className="space-y-1 mb-4">
-            <span className="text-xs font-semibold tracking-widest text-[#D4AF37] uppercase">
-              1. Etkinlik
-            </span>
-            <h3 className="font-serif text-2xl text-[#1a1a1a] font-medium">
-              {weddingData.kina.title}
-            </h3>
-            <p className="text-xs text-[#666]">
-              {weddingData.kina.displayDate}
-            </p>
-          </div>
+        <p
+          className="
+            mx-auto
+            mt-5
+            max-w-lg
+            font-serif
+            text-base
+            italic
+            leading-relaxed
+            text-[#716B63]
+          "
+        >
+          Bu güzel günü birlikte kutlamak için
+          sabırsızlanıyoruz.
+        </p>
 
-          {kinaTime ? (
-            <RenderTimerGrid time={kinaTime} />
-          ) : (
-            <div className="w-full py-6 px-4 bg-[#faf8f5] rounded-xl border border-dashed border-[#d4af37]/40 flex flex-col items-center justify-center space-y-2">
-              <span className="text-2xl animate-pulse">⏳</span>
-              <p className="font-serif italic text-sm text-[#766e65]">
-                Tarih ve Detaylar Yakında Açıklanacak
-              </p>
+        {/* Geri sayım */}
+
+        <div
+          className="
+            mx-auto
+            mt-12
+            grid
+            max-w-3xl
+            grid-cols-2
+            gap-3
+            sm:grid-cols-4
+            sm:gap-5
+          "
+        >
+          {timeBoxes.map((item) => (
+            <div
+              key={item.label}
+              className="
+                rounded-2xl
+                border
+                border-[#E8D7B0]
+                bg-[#FFFDF9]
+                px-3
+                py-6
+                shadow-[0_10px_30px_rgba(45,42,38,0.04)]
+                sm:px-5
+                sm:py-8
+              "
+            >
+              <div
+                className="
+                  font-serif
+                  text-4xl
+                  font-light
+                  tabular-nums
+                  text-[#2D2A26]
+                  sm:text-5xl
+                "
+              >
+                {String(item.value).padStart(2, "0")}
+              </div>
+
+              <div
+                className="
+                  mt-2
+                  text-[10px]
+                  uppercase
+                  tracking-[0.25em]
+                  text-[#8A8379]
+                  sm:text-xs
+                "
+              >
+                {item.label}
+              </div>
             </div>
-          )}
+          ))}
         </div>
 
-        {/* DÜĞÜN KARTI */}
-        <div className="bg-[#fffdfa] border border-[#d4af37]/30 rounded-2xl p-6 shadow-md flex flex-col justify-between items-center text-center relative overflow-hidden">
-          <div className="space-y-1 mb-4">
-            <span className="text-xs font-semibold tracking-widest text-[#D4AF37] uppercase">
-              2. Etkinlik
-            </span>
-            <h3 className="font-serif text-2xl text-[#1a1a1a] font-medium">
-              {weddingData.wedding.title}
-            </h3>
-            <p className="text-xs text-[#666]">
-              {weddingData.wedding.displayDate} — {weddingData.wedding.displayTime}
-            </p>
-          </div>
+        {/* Tarih */}
 
-          {weddingTime ? (
-            <RenderTimerGrid time={weddingTime} />
-          ) : (
-            <div className="w-full py-6 px-4 bg-[#faf8f5] rounded-xl border border-dashed border-[#d4af37]/40 flex flex-col items-center justify-center space-y-2">
-              <p className="font-serif italic text-sm text-[#766e65]">
-                Düğün Günü Geldi!
-              </p>
-            </div>
-          )}
+        <div
+          className="
+            mt-10
+            inline-flex
+            items-center
+            gap-3
+            border-y
+            border-[#C8A96A]/30
+            px-6
+            py-3
+          "
+        >
+          <span className="font-serif text-[#C8A96A]">
+            ✦
+          </span>
+
+          <span
+            className="
+              text-sm
+              tracking-[0.15em]
+              text-[#716B63]
+            "
+          >
+            {weddingData.displayDate}
+          </span>
+
+          <span className="font-serif text-[#C8A96A]">
+            ✦
+          </span>
         </div>
-
       </div>
     </section>
   );

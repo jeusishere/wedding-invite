@@ -1,67 +1,224 @@
-import React from 'react';
-import { weddingData } from '../../../data/wedding';
+"use client";
+
+import React from "react";
+import { weddingData } from "../../../data/wedding";
 
 export default function Hero() {
   const handleScrollDown = () => {
-    const infoSection = document.getElementById('info-section');
-    if (infoSection) {
-      infoSection.scrollIntoView({ behavior: 'smooth' });
+    const countdownSection = document.getElementById("countdown-section");
+
+    if (countdownSection) {
+      countdownSection.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   };
 
   return (
-    <section className="min-h-screen flex flex-col justify-between items-center py-12 px-6 relative bg-[#faf8f5] text-[#2c2c2c] overflow-hidden">
-      {/* Arka Plan Mimarisi ve Arka Plan Desen Dokusu */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:20px_20px]" />
+    <section
+      id="hero-section"
+      className="
+        relative
+        min-h-[86vh]
+        flex
+        flex-col
+        items-center
+        justify-between
+        overflow-hidden
+        bg-[#FAF7F2]
+        px-6
+        pt-8
+        pb-5
+        text-center
+      "
+    >
+      {/* Çok hafif arka plan süsü */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          opacity-[0.035]
+          bg-[radial-gradient(circle_at_center,#C8A96A_1px,transparent_1px)]
+          bg-[size:24px_24px]
+        "
+      />
 
-      {/* Üst Kısım Süsleme Motifi */}
-      <div className="flex flex-col items-center pt-4 z-10">
-        <div className="w-12 h-[1px] bg-[#D4AF37]/60" />
-        <span className="text-[#D4AF37] font-serif text-lg my-1">❖</span>
-        <div className="w-12 h-[1px] bg-[#D4AF37]/60" />
+      {/* Üst Süsleme */}
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="h-px w-12 bg-[#C8A96A]/60" />
+
+        <span className="my-1 font-serif text-lg text-[#C8A96A]">
+          ❖
+        </span>
+
+        <div className="h-px w-12 bg-[#C8A96A]/60" />
       </div>
 
-      {/* Ana İçerik */}
-      <div className="flex flex-col items-center max-w-2xl mx-auto my-auto z-10 space-y-6 text-center">
+      {/* Ana Davetiye İçeriği */}
+      <div
+        className="
+          relative
+          z-10
+          flex
+          w-full
+          max-w-3xl
+          flex-col
+          items-center
+          justify-center
+          text-center
+          space-y-6
+        "
+      >
+        {/* Küçük başlık */}
+        <p
+          className="
+            text-xs
+            sm:text-sm
+            tracking-[0.35em]
+            uppercase
+            text-[#8A847B]
+          "
+        >
+          Düğün Davetiyesi
+        </p>
+
         {/* İsimler */}
-        <div className="space-y-2">
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#1a1a1a] tracking-wide font-light">
+        <div className="space-y-3">
+
+          <h1
+            className="
+              font-serif
+              text-3xl
+              sm:text-5xl
+              md:text-6xl
+              font-light
+              tracking-wide
+              text-[#2D2A26]
+            "
+          >
             {weddingData.bride}
           </h1>
 
-          <div className="flex items-center justify-center gap-4 my-3">
-            <span className="w-8 sm:w-16 h-[1px] bg-[#D4AF37]/40" />
-            <span className="font-serif italic text-2xl sm:text-3xl text-[#D4AF37]">&</span>
-            <span className="w-8 sm:w-16 h-[1px] bg-[#D4AF37]/40" />
+          <div className="flex items-center justify-center gap-4">
+
+            <span className="h-px w-8 sm:w-16 bg-[#C8A96A]/40" />
+
+            <span
+              className="
+                font-serif
+                text-2xl
+                sm:text-3xl
+                italic
+                text-[#C8A96A]
+              "
+            >
+              &
+            </span>
+
+            <span className="h-px w-8 sm:w-16 bg-[#C8A96A]/40" />
+
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#1a1a1a] tracking-wide font-light">
+          <h1
+            className="
+              font-serif
+              text-3xl
+              sm:text-5xl
+              md:text-6xl
+              font-light
+              tracking-wide
+              text-[#2D2A26]
+            "
+          >
             {weddingData.groom}
           </h1>
+
         </div>
 
-        {/* Tarih Alanı */}
-        <div className="pt-4 pb-2">
-          <span className="inline-block px-6 py-2 border-y border-[#D4AF37]/40 font-serif text-lg sm:text-xl tracking-widest text-[#555] uppercase">
+        {/* Tarih */}
+        <div className="pt-3">
+
+          <span
+            className="
+              inline-block
+              border-y
+              border-[#C8A96A]/40
+              px-6
+              py-2
+              font-serif
+              text-base
+              sm:text-xl
+              tracking-[0.18em]
+              text-[#55504A]
+            "
+          >
             {weddingData.displayDate}
           </span>
+
         </div>
 
         {/* Davet Mesajı */}
-        <p className="font-serif italic text-base sm:text-lg text-[#555] max-w-md leading-relaxed pt-2">
-          Hayatımızın en özel gününde sizleri aramızda görmekten mutluluk duyacağız.
+        <p
+          className="
+            max-w-md
+            px-4
+            pt-1
+            font-serif
+            text-base
+            sm:text-lg
+            italic
+            leading-relaxed
+            text-[#66615B]
+          "
+        >
+          Hayatımızın en özel gününde sizleri aramızda görmekten mutluluk
+          duyacağız.
         </p>
+
       </div>
 
-      {/* Alt Kaydırma Oku */}
-      <div className="pb-6 z-10 flex flex-col items-center">
+      {/* Aşağıda içerik olduğunu gösteren alan */}
+      <div className="relative z-10 flex flex-col items-center">
+
         <button
+          type="button"
           onClick={handleScrollDown}
-          className="group flex flex-col items-center text-[#D4AF37] hover:text-[#b39023] transition-colors cursor-pointer focus:outline-none"
-          aria-label="Aşağı Kaydır"
+          className="
+            group
+            flex
+            flex-col
+            items-center
+            gap-1
+            text-[#C8A96A]
+            transition-all
+            duration-300
+            hover:text-[#A98236]
+            focus:outline-none
+          "
+          aria-label="Düğün detaylarını keşfet"
         >
+
+          <span
+            className="
+              text-[10px]
+              uppercase
+              tracking-[0.3em]
+              opacity-70
+              transition-opacity
+              group-hover:opacity-100
+            "
+          >
+            Detayları keşfet
+          </span>
+
           <svg
-            className="w-7 h-7 animate-bounce stroke-current"
+            className="
+              h-6
+              w-6
+              animate-bounce
+              stroke-current
+            "
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -72,8 +229,23 @@ export default function Hero() {
               d="M19 14l-7 7m0 0l-7-7m7 7V3"
             />
           </svg>
+
         </button>
+
+        {/* Bir sonraki bölümün ipucu */}
+        <div
+          className="
+            mt-2
+            h-5
+            w-px
+            bg-gradient-to-b
+            from-[#C8A96A]/50
+            to-transparent
+          "
+        />
+
       </div>
+
     </section>
   );
 }
