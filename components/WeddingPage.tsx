@@ -1,18 +1,31 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { weddingData } from '@/data/wedding';
+import Envelope from '@/components/sections/Envelope';
+import Rsvp from '@/components/sections/Rsvp';
+import Upload from '@/components/sections/Upload';
+import Countdown from '@/components/sections/Countdown';
 import Location from '@/components/sections/Location';
-import RsvpForm from '@/components/sections/RSVP'; // Katılım bildirimi bileşenin
-import PhotoUpload from '@/components/sections/Upload'; // Fotoğraf yükleme bileşenin
-import Countdown from '@/components/sections/Countdown'; // Geri sayım bileşenin
 
 export default function WeddingPage() {
+  // Zarfın açık/kapalı durumunu tutan state
+  const [isOpened, setIsOpened] = useState(false);
+
   return (
     <main className="min-h-screen bg-[#faf8f5] text-[#1a1a1a]">
       
+      {/* 0. Zarf ekranı (Açılmadığı sürece ekranda durur, tıklanınca kaybolur) */}
+      {!isOpened && (
+        <Envelope onOpen={() => setIsOpened(true)} />
+      )}
+
       {/* 1. ÜST ALAN: İsimler, Tarih/Saat ve Altında Küçük Geri Sayım */}
       <section className="py-10 px-4 text-center border-b border-[#e5dfd3]">
         <div className="max-w-2xl mx-auto space-y-3">
-          <p className="text-[#D4AF37] tracking-widest uppercase text-xs font-medium">Davetlisiniz</p>
+          <p className="text-[#D4AF37] tracking-widest uppercase text-xs font-medium">
+            Davetlisiniz
+          </p>
           
           <h1 className="text-3xl sm:text-5xl font-serif text-[#1a1a1a]">
             {weddingData.bride} & {weddingData.groom}
@@ -29,18 +42,18 @@ export default function WeddingPage() {
         </div>
       </section>
 
-      {/* 2. ORTA ALAN: Solda Katılım Bildirimi — Sağda Fotoğraf Gönderin */}
+      {/* 2. ORTA ALAN: Solda Katılım Bildirimi (RSVP) — Sağda Fotoğraf Yükleme (Upload) */}
       <section className="py-12 px-4 max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           
-          {/* Sol Kart: Katılım Bildirimi (RSVP) */}
+          {/* Sol Kart: Katılım Bildirimi */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#e5dfd3] h-full">
-            <RsvpForm />
+            <Rsvp />
           </div>
 
-          {/* Sağ Kart: Fotoğraflarınızı Gönderin */}
+          {/* Sağ Kart: Fotoğraf Yükleme */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#e5dfd3] h-full">
-            <PhotoUpload />
+            <Upload />
           </div>
 
         </div>

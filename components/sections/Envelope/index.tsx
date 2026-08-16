@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { weddingData } from '../../../data/wedding';
 
+// onOpen alanına ? ekleyerek opsiyonel yaptık
 interface EnvelopeProps {
-  onOpen: () => void;
+  onOpen?: () => void;
 }
 
 export default function Envelope({ onOpen }: EnvelopeProps) {
@@ -13,10 +14,8 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
   const handleSealClick = () => {
     if (step !== 'closed') return;
 
-    // 1. Kapağı aç
     setStep('opening');
 
-    // 2. Zarf kapandıktan/açıldıktan sonra davetiye kartını tam öne çıkar
     setTimeout(() => {
       setStep('card_revealed');
     }, 700);
@@ -60,49 +59,39 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
             <div className="w-12 h-[1px] bg-[#D4AF37] mt-3" />
           </div>
 
-          {/* Dış Zarf Gövdesi (Mühür Basılana Kadar Kartı Saklar) */}
+          {/* Dış Zarf Gövdesi */}
           {step !== 'card_revealed' && (
             <div className="absolute inset-0 bg-[#f3efe6] border border-[#dcd5c5] rounded-lg shadow-2xl overflow-hidden pointer-events-none z-20">
-              {/* Zarf Alt & Yan Katlamaları Görünümü */}
               <div 
                 className="absolute inset-0 bg-[#ebe5d8]"
-                style={{
-                  clipPath: 'polygon(0 100%, 50% 45%, 100% 100%)'
-                }}
+                style={{ clipPath: 'polygon(0 100%, 50% 45%, 100% 100%)' }}
               />
               <div 
                 className="absolute inset-0 bg-[#e4dccf]"
-                style={{
-                  clipPath: 'polygon(0 0, 45% 50%, 0 100%)'
-                }}
+                style={{ clipPath: 'polygon(0 0, 45% 50%, 0 100%)' }}
               />
               <div 
                 className="absolute inset-0 bg-[#e4dccf]"
-                style={{
-                  clipPath: 'polygon(100% 0, 100% 100%, 55% 50%)'
-                }}
+                style={{ clipPath: 'polygon(100% 0, 100% 100%, 55% 50%)' }}
               />
 
-              {/* Zarf Üst Kapağı (Flap) */}
+              {/* Zarf Üst Kapağı */}
               <div
                 className={`absolute top-0 left-0 w-full h-full bg-[#f8f5ee] border-b border-[#d4af37]/30 origin-top transition-transform duration-700 ease-in-out ${
                   step === 'opening' ? '[transform:rotateX(180deg)] z-0' : 'z-30'
                 }`}
-                style={{
-                  clipPath: 'polygon(0 0, 100% 0, 50% 55%)',
-                }}
+                style={{ clipPath: 'polygon(0 0, 100% 0, 50% 55%)' }}
               />
             </div>
           )}
 
-          {/* ALTIN MÜHÜR (WAX SEAL) */}
+          {/* ALTIN MÜHÜR */}
           {step === 'closed' && (
             <button
               onClick={handleSealClick}
               className="absolute z-40 transform hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none group flex flex-col items-center"
               title="Davetiyeyi Açmak İçin Tıklayın"
             >
-              {/* Altın Sarısı / Doku Verilmiş Mühür */}
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#F4D068] via-[#D4AF37] to-[#AA7C11] border-2 border-[#FFF8DC] shadow-[0_4px_15px_rgba(212,175,55,0.4)] flex items-center justify-center text-[#3a2e10] font-serif font-bold text-lg tracking-wider group-hover:brightness-110 transition-all">
                 <span>H&amp;S</span>
               </div>
@@ -114,11 +103,11 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
 
         </div>
 
-        {/* Zarf Açıldıktan Sonra Beliren "Aşağı Kaydır / Sitéye Geç" Butonu */}
+        {/* Giriş Butonu (onOpen?.() ile güvenli çağrılıyor) */}
         {step === 'card_revealed' && (
           <div className="mt-8 flex flex-col items-center animate-fade-in">
             <button
-              onClick={onOpen}
+              onClick={() => onOpen?.()}
               className="flex flex-col items-center gap-2 text-[#D4AF37] hover:text-white transition-colors cursor-pointer group focus:outline-none"
             >
               <span className="text-xs font-semibold tracking-widest uppercase">
