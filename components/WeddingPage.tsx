@@ -1,24 +1,17 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import { weddingData } from '@/data/wedding';
-import Envelope from '@/components/sections/Envelope';
-import Rsvp from '@/components/sections/Rsvp';
+import Envelope from '@/components/sections/Envelope'; // Klasör adın EnvelopeModal veya Zarf ise burayı güncelle
+import Rsvp from '@/components/sections/RSVP';
 import Upload from '@/components/sections/Upload';
 import Countdown from '@/components/sections/Countdown';
 import Location from '@/components/sections/Location';
 
 export default function WeddingPage() {
-  // Zarfın açık/kapalı durumunu tutan state
-  const [isOpened, setIsOpened] = useState(false);
-
   return (
     <main className="min-h-screen bg-[#faf8f5] text-[#1a1a1a]">
       
-      {/* 0. Zarf ekranı (Açılmadığı sürece ekranda durur, tıklanınca kaybolur) */}
-      {!isOpened && (
-        <Envelope onOpen={() => setIsOpened(true)} />
-      )}
+      {/* 0. Davetiye Zarfı / Açılış Animasyonu */}
+      <Envelope />
 
       {/* 1. ÜST ALAN: İsimler, Tarih/Saat ve Altında Küçük Geri Sayım */}
       <section className="py-10 px-4 text-center border-b border-[#e5dfd3]">
