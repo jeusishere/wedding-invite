@@ -34,24 +34,35 @@ export default function Countdown() {
     return () => clearInterval(interval);
   }, []);
 
+  const items = [
+    { label: 'GÜN', value: timeLeft.days },
+    { label: 'SAAT', value: timeLeft.hours },
+    { label: 'DAKİKA', value: timeLeft.minutes },
+    { label: 'SANİYE', value: timeLeft.seconds },
+  ];
+
   return (
-    <div className="flex items-center justify-center gap-2 sm:gap-3 text-center">
-      {[
-        { label: 'Gün', value: timeLeft.days },
-        { label: 'Saat', value: timeLeft.hours },
-        { label: 'Dakika', value: timeLeft.minutes },
-        { label: 'Saniye', value: timeLeft.seconds },
-      ].map((item, i) => (
-        <div key={i} className="flex flex-col items-center">
-          <div className="bg-white border border-[#e5dfd3] shadow-xs rounded-xl px-2.5 py-1.5 min-w-[50px]">
-            <span className="text-sm sm:text-base font-bold text-[#1a1a1a] font-serif">
-              {String(item.value).padStart(2, '0')}
+    <div className="flex items-center justify-center gap-2 sm:gap-4">
+      {items.map((item, index) => (
+        <React.Fragment key={item.label}>
+          <div className="flex flex-col items-center">
+            <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-[#FDFBF7] border border-[#C5A059]/40 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:border-[#C5A059] transition-all duration-300">
+              <span className="text-lg sm:text-2xl font-serif font-semibold text-[#2C2C2C]">
+                {String(item.value).padStart(2, '0')}
+              </span>
+            </div>
+            <span className="text-[9px] sm:text-[10px] text-[#C5A059] font-medium tracking-widest mt-2">
+              {item.label}
             </span>
           </div>
-          <span className="text-[10px] text-[#888] uppercase tracking-wider mt-1 font-medium">
-            {item.label}
-          </span>
-        </div>
+
+          {/* İki Nokta Üst Üste Ayraçlar */}
+          {index < items.length - 1 && (
+            <span className="text-[#C5A059]/60 font-serif text-sm sm:text-lg mb-5 select-none">
+              :
+            </span>
+          )}
+        </React.Fragment>
       ))}
     </div>
   );
