@@ -12,7 +12,7 @@ export default function WeddingPage() {
   const [isOpened, setIsOpened] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#FDFBF7] text-[#2B2B2B] flex flex-col items-center w-full selection:bg-[#C5A059]/20">
+    <main className="min-h-screen bg-[#FDFBF7] text-[#2B2B2B] flex flex-col items-center justify-between w-full selection:bg-[#C5A059]/20">
       
       {/* 1. Zarf (Açılış Ekranı) */}
       {!isOpened && (
@@ -20,7 +20,7 @@ export default function WeddingPage() {
       )}
 
       {/* 2. Ana Davetiye Alanı */}
-      <div className="w-full max-w-3xl mx-auto px-4 py-8 sm:py-14 space-y-10 flex flex-col items-center">
+      <div className="w-full max-w-3xl mx-auto px-4 py-8 sm:py-14 space-y-10 flex flex-col items-center flex-grow">
         
         {/* ANA DAVETİYE KARTI */}
         <section className="w-full bg-white rounded-3xl p-8 sm:p-14 shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-[#EADBCE] text-center relative flex flex-col items-center">
@@ -90,6 +90,14 @@ export default function WeddingPage() {
         </section>
 
       </div>
+
+      {/* 3. SADE VE ZARİF FOOTER */}
+      <footer className="w-full py-6 text-center border-t border-[#EADBCE]/60 bg-[#FDFBF7] mt-6">
+        <p className="font-serif text-[11px] text-[#888888] tracking-[0.25em] uppercase font-medium">
+          Hatice & Samet
+        </p>
+      </footer>
+
     </main>
   );
 }
