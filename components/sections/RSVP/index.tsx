@@ -1,136 +1,135 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
+
+const inputCls =
+  "mt-1 w-full border-0 border-b border-gold/50 bg-transparent px-0 py-2 font-body text-ink placeholder:text-soft/60 focus:border-wine focus:outline-none focus:ring-0";
+
+const chip = (active: boolean) =>
+  `flex-1 min-w-[5.5rem] border px-3 py-3 text-sm transition focus-visible:outline-2 focus-visible:outline-gold ${
+    active
+      ? "border-wine bg-wine text-cream"
+      : "border-gold/40 bg-transparent text-ink hover:border-wine"
+  }`;
 
 export default function Rsvp() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    guestCount: '1',
-    attendance: 'yes',
-    note: '',
+    firstName: "",
+    lastName: "",
+    guestCount: "1",
+    attendance: "yes",
+    note: "",
   });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
 
+  // NOT: Mevcut davranış korundu. Yanıt şu an sadece ekranda teşekkür gösteriyor.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('submitting');
-    setTimeout(() => setStatus('success'), 800);
+    setStatus("submitting");
+    setTimeout(() => setStatus("success"), 800);
   };
 
   return (
-    <div className="space-y-5">
-      <div className="text-center space-y-1">
-        <h3 className="text-2xl font-serif text-[#1A1A1A]">Katılım Bildirimi</h3>
-        <p className="text-xs text-[#777777] leading-relaxed">
-          Lütfen katılım durumunuzu en geç düğün tarihinden önce bildiriniz.
+    <div>
+      <div className="text-center">
+        <h2 className="font-script text-5xl text-wine">Yanıtınız</h2>
+        <p className="mt-2 font-display text-lg italic text-soft">
+          Lütfen katılım durumunuzu düğün tarihinden önce bildirin.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        
-        {/* Ad & Soyad */}
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#555] mb-1">Adınız</label>
+      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        <div className="grid grid-cols-2 gap-5">
+          <label className="block text-sm text-soft">
+            Adınız
             <input
               type="text"
               required
-              placeholder="Adınız"
+              autoComplete="given-name"
               value={formData.firstName}
-              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-              className="w-full px-3.5 py-2.5 text-xs bg-[#FAF7F2] border border-[#E8E2D5] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37] transition-all"
+              onChange={(e) =>
+                setFormData({ ...formData, firstName: e.target.value })
+              }
+              className={inputCls}
             />
-          </div>
-          <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#555] mb-1">Soyadınız</label>
+          </label>
+          <label className="block text-sm text-soft">
+            Soyadınız
             <input
               type="text"
               required
-              placeholder="Soyadınız"
+              autoComplete="family-name"
               value={formData.lastName}
-              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-              className="w-full px-3.5 py-2.5 text-xs bg-[#FAF7F2] border border-[#E8E2D5] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37] transition-all"
+              onChange={(e) =>
+                setFormData({ ...formData, lastName: e.target.value })
+              }
+              className={inputCls}
             />
-          </div>
+          </label>
         </div>
 
-        {/* Katılım Seçimi (Modern Buton Grubu) */}
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#555] mb-1.5">Katılım Durumunuz</label>
-          <div className="grid grid-cols-2 gap-2">
+          <p className="text-sm text-soft">Katılım durumunuz</p>
+          <div className="mt-2 flex gap-3">
             <button
               type="button"
-              onClick={() => setFormData({ ...formData, attendance: 'yes' })}
-              className={`py-2.5 px-3 text-xs font-medium rounded-xl border transition-all ${
-                formData.attendance === 'yes'
-                  ? 'bg-[#D4AF37] text-white border-[#D4AF37] shadow-xs'
-                  : 'bg-[#FAF7F2] text-[#666] border-[#E8E2D5] hover:border-[#D4AF37]/50'
-              }`}
+              onClick={() => setFormData({ ...formData, attendance: "yes" })}
+              className={chip(formData.attendance === "yes")}
             >
               ✓ Katılıyorum
             </button>
             <button
               type="button"
-              onClick={() => setFormData({ ...formData, attendance: 'no' })}
-              className={`py-2.5 px-3 text-xs font-medium rounded-xl border transition-all ${
-                formData.attendance === 'no'
-                  ? 'bg-[#1A1A1A] text-white border-[#1A1A1A] shadow-xs'
-                  : 'bg-[#FAF7F2] text-[#666] border-[#E8E2D5] hover:border-[#1A1A1A]/30'
-              }`}
+              onClick={() => setFormData({ ...formData, attendance: "no" })}
+              className={chip(formData.attendance === "no")}
             >
               ✕ Katılamıyorum
             </button>
           </div>
         </div>
 
-        {/* Kişi Sayısı */}
-        {formData.attendance === 'yes' && (
+        {formData.attendance === "yes" && (
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#555] mb-1">Kişi Sayısı</label>
-            <div className="flex gap-2">
-              {['1', '2', '3', '4+'].map((num) => (
+            <p className="text-sm text-soft">Kaç kişi geleceksiniz?</p>
+            <div className="mt-2 flex gap-2">
+              {["1", "2", "3", "4+"].map((num) => (
                 <button
                   key={num}
                   type="button"
                   onClick={() => setFormData({ ...formData, guestCount: num })}
-                  className={`flex-1 py-2 text-xs font-medium rounded-xl border transition-all ${
-                    formData.guestCount === num
-                      ? 'bg-[#2C2C2C] text-white border-[#2C2C2C]'
-                      : 'bg-[#FAF7F2] text-[#666] border-[#E8E2D5]'
-                  }`}
+                  className={chip(formData.guestCount === num)}
                 >
-                  {num} {num !== '4+' && 'Kişi'}
+                  {num}
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        {/* Not */}
-        <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#555] mb-1">Notunuz (Opsiyonel)</label>
+        <label className="block text-sm text-soft">
+          Notunuz (isteğe bağlı)
           <textarea
             rows={2}
-            placeholder="Gelin ve damada iletmek istediğiniz mesaj..."
+            placeholder="Gelin ve damada iletmek istediğiniz mesaj"
             value={formData.note}
             onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-            className="w-full px-3.5 py-2.5 text-xs bg-[#FAF7F2] border border-[#E8E2D5] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37] transition-all"
+            className={inputCls + " resize-none"}
           />
-        </div>
+        </label>
 
-        {/* Gönder Butonu */}
         <button
           type="submit"
-          disabled={status === 'submitting'}
-          className="w-full bg-[#D4AF37] hover:bg-[#b8952b] text-white text-xs font-semibold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-[0.99] disabled:opacity-50"
+          disabled={status === "submitting" || status === "success"}
+          className="w-full bg-wine px-4 py-4 text-sm tracking-wide text-cream shadow-md transition active:scale-[0.99] disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
-          {status === 'submitting' ? 'Gönderiliyor...' : 'Katılım Bilgisini Gönder'}
+          {status === "submitting" ? "Gönderiliyor..." : "Yanıtımı gönder"}
         </button>
 
-        {status === 'success' && (
-          <p className="text-xs text-center text-emerald-600 font-medium pt-1">
-            ✓ Yanıtınız başarıyla kaydedildi, teşekkür ederiz!
+        {status === "success" && (
+          <p className="text-center font-display text-xl italic text-wine">
+            Yanıtınız bize ulaştı, teşekkür ederiz.
           </p>
         )}
       </form>

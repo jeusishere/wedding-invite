@@ -1,93 +1,77 @@
 @import "tailwindcss";
 
-:root {
-  --background: #FAF7F2;
-  --foreground: #2D2A26;
-  --gold: #C8A96A;
-  --soft-gold: #E8D7B0;
-  --cream: #FFFDF9;
+@theme inline {
+  --font-script: var(--font-pinyon), cursive;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-jost), system-ui, sans-serif;
+
+  --color-ivory: #f8f0e7;
+  --color-sand: #efe2d3;
+  --color-cream: #fffaf4;
+  --color-ink: #3b2a2c;
+  --color-soft: #7b6568;
+  --color-wine: #5b1a2b;
+  --color-gold: #a8823f;
+  --color-glow: #e3c98f;
+  --color-line: #e0cdb5;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
-  overflow-x: hidden;
-}
-
-/* Başlıklar */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 500;
-}
-
-/* Yazı seçme */
-
-::selection {
-  background: var(--soft-gold);
-  color: var(--foreground);
-}
-
-/* Fade In */
-
-.fade-in {
-  animation: fadeIn 1.2s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
+/* Element stilleri @layer base içinde olmalı, yoksa Tailwind sınıflarını ezer */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  body {
+    min-height: 100svh;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: #e3c98f;
+    color: #3b2a2c;
+  }
+  /* iOS'ta forma tıklayınca sayfa zoom yapmasın */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
   }
 }
 
-/* Altın Parıltı */
-
-.gold-glow {
-  box-shadow:
-    0 0 25px rgba(200, 169, 106, .18),
-    0 0 60px rgba(200, 169, 106, .08);
+/* Süs çizgisi: <div className="orn">❖</div> */
+.orn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--color-gold);
+}
+.orn::before,
+.orn::after {
+  content: "";
+  height: 1px;
+  width: 64px;
+  background: linear-gradient(90deg, transparent, var(--color-gold));
+}
+.orn::after {
+  transform: scaleX(-1);
 }
 
-/* Buton Geçişleri */
-
-button {
-  transition: .25s ease;
+/* Mühür nabzı */
+.pulse-seal {
+  animation: pulseSeal 2.4s ease-in-out infinite;
+}
+@keyframes pulseSeal {
+  50% {
+    transform: scale(1.07);
+  }
 }
 
-button:hover {
-  transform: scale(1.03);
-}
-
-button:active {
-  transform: scale(.98);
-}
-
-/* Linkler */
-
-a {
-  color: inherit;
-  text-decoration: none;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

@@ -1,103 +1,91 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { weddingData } from '@/data/wedding';
-import Envelope from '@/components/sections/Envelope';
-import Rsvp from '@/components/sections/RSVP';
-import Upload from '@/components/sections/Upload';
-import Countdown from '@/components/sections/Countdown';
-import Location from '@/components/sections/Location';
+import React, { useState } from "react";
+import { weddingData } from "@/data/wedding";
+import Envelope from "@/components/sections/Envelope";
+import Rsvp from "@/components/sections/RSVP";
+import Upload from "@/components/sections/Upload";
+import Countdown from "@/components/sections/Countdown";
+import Location from "@/components/sections/Location";
 
 export default function WeddingPage() {
   const [isOpened, setIsOpened] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#FDFBF7] text-[#2B2B2B] flex flex-col items-center justify-between w-full selection:bg-[#C5A059]/20">
-      
-      {/* 1. Zarf (Açılış Ekranı) */}
-      {!isOpened && (
-        <Envelope onOpen={() => setIsOpened(true)} />
-      )}
+    <main className="min-h-svh bg-ivory font-body text-ink selection:bg-glow/60">
+      {/* 1. Zarf (açılış ekranı) */}
+      {!isOpened && <Envelope onOpen={() => setIsOpened(true)} />}
 
-      {/* 2. Ana Davetiye Alanı */}
-      <div className="w-full max-w-3xl mx-auto px-4 py-8 sm:py-14 space-y-10 flex flex-col items-center flex-grow">
-        
-        {/* ANA DAVETİYE KARTI */}
-        <section className="w-full bg-white rounded-3xl p-8 sm:p-14 shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-[#EADBCE] text-center relative flex flex-col items-center">
-          
-          {/* Çift İnce Altın Çerçeve */}
-          <div className="absolute inset-3.5 border border-[#C5A059]/35 rounded-2xl pointer-events-none" />
-          <div className="absolute inset-5 border border-[#C5A059]/15 rounded-xl pointer-events-none" />
+      {/* 2. Davetiye */}
+      <section className="mx-auto flex min-h-svh max-w-2xl flex-col items-center justify-center px-6 py-20 text-center">
+        <p className="font-display text-xl italic text-soft">
+          Sizleri aramızda görmekten mutluluk duyarız
+        </p>
 
-          <div className="max-w-lg mx-auto space-y-6 relative z-10 flex flex-col items-center">
-            
-            {/* Üst Sıcak Hitap */}
-            <p className="text-[#C5A059] tracking-[0.25em] uppercase text-xs font-semibold pt-2">
-              Sizleri Aramızda Görmekten Mutluluk Duyarız
-            </p>
+        <h1 className="mt-8 text-balance font-script text-5xl leading-[1.15] text-wine sm:text-7xl">
+          <span className="block">{weddingData.bride}</span>
+          <span className="my-1 block text-4xl text-gold">&amp;</span>
+          <span className="block">{weddingData.groom}</span>
+        </h1>
 
-            {/* İsimler */}
-            <h1 className="text-3xl sm:text-5xl font-serif text-[#1A1A1A] tracking-wide leading-tight">
-              {weddingData.bride} <span className="text-[#C5A059] font-light">&</span> {weddingData.groom}
-            </h1>
+        <div className="orn my-10">❖</div>
 
-            {/* Süsleme Ayracı */}
-            <div className="flex items-center justify-center gap-3 w-full py-0.5">
-              <div className="h-[1px] w-14 bg-[#C5A059]/30" />
-              <span className="text-[#C5A059] text-xs">❖</span>
-              <div className="h-[1px] w-14 bg-[#C5A059]/30" />
-            </div>
+        <p className="max-w-md text-balance font-display text-xl leading-relaxed text-ink sm:text-2xl">
+          Hayatımızı birleştireceğimiz bu özel günde siz değerli dostlarımızı
+          yanımızda görmekten onur duyuyoruz.
+        </p>
 
-            {/* Samimi Davet Metni */}
-            <p className="text-[#555555] font-serif text-sm sm:text-base leading-relaxed max-w-md">
-              Hayatımızı birleştireceğimiz bu özel günde siz değerli dostlarımızı yanımızda görmekten onur duyuyoruz.
-            </p>
+        <div className="mt-10 border-y border-gold/40 px-8 py-5">
+          <p className="font-display text-2xl text-ink sm:text-3xl">
+            {weddingData.displayDate}
+          </p>
+          <p className="font-display text-xl italic text-soft">
+            saat {weddingData.displayTime}
+          </p>
+        </div>
 
-            {/* Tarih & Saat */}
-            <div className="pt-2 pb-1 w-full">
-              <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 bg-[#FDFBF7] px-7 py-3 rounded-2xl border border-[#EADBCE] text-[#2B2B2B] text-sm sm:text-base font-medium w-full sm:w-auto font-serif">
-                <span>📅 {weddingData.displayDate}</span>
-                <span className="hidden sm:inline text-[#C5A059]">|</span>
-                <span>⏰ Saat: {weddingData.displayTime}</span>
-              </div>
-            </div>
+        <p className="mt-6 font-display text-lg italic text-soft">
+          {weddingData.venue}
+        </p>
+      </section>
 
-            {/* Yenilenmiş Geri Sayım */}
-            <div className="w-full flex flex-col items-center pt-3">
-              <p className="text-[10px] text-[#888888] uppercase tracking-widest font-sans mb-3 font-medium">
-                Düğünümüze Kalan Süre
-              </p>
-              <Countdown />
-            </div>
+      {/* 3. Geri sayım */}
+      <section className="bg-wine px-6 py-16 text-center">
+        <h2 className="font-script text-5xl text-glow">
+          Düğünümüze kalan süre
+        </h2>
+        <Countdown />
+      </section>
 
-          </div>
-        </section>
-
-        {/* KATILIM BİLDİRİMİ VE FOTOĞRAF YÜKLEME */}
-        <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          <div className="bg-white p-7 sm:p-9 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-[#EADBCE] flex flex-col justify-between">
+      {/* 4. Katılım bildirimi: yanıt kartı */}
+      <section className="mx-auto max-w-xl px-5 py-20">
+        <div className="border border-gold/60 p-1.5">
+          <div className="border border-gold/30 bg-cream px-6 py-10 sm:px-10">
             <Rsvp />
           </div>
+        </div>
+      </section>
 
-          <div className="bg-white p-7 sm:p-9 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-[#EADBCE] flex flex-col justify-between">
-            <Upload />
-          </div>
-        </section>
+      {/* 5. Fotoğraf paylaşımı */}
+      <section className="mx-auto max-w-xl px-6 pb-20">
+        <Upload />
+      </section>
 
-        {/* HARİTA BÖLÜMÜ */}
-        <section className="w-full bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-[#EADBCE] overflow-hidden">
-          <Location />
-        </section>
+      {/* 6. Konum */}
+      <section className="bg-sand px-5 py-20">
+        <Location />
+      </section>
 
-      </div>
-
-      {/* 3. SADE VE ZARİF FOOTER */}
-      <footer className="w-full py-6 text-center border-t border-[#EADBCE]/60 bg-[#FDFBF7] mt-6">
-        <p className="font-serif text-[11px] text-[#888888] tracking-[0.25em] uppercase font-medium">
-          Hatice & Samet
+      {/* 7. Alt bilgi */}
+      <footer
+        className="px-6 pt-14 text-center"
+        style={{ paddingBottom: "max(3.5rem, env(safe-area-inset-bottom))" }}
+      >
+        <p className="font-script text-4xl text-wine">Hatice &amp; Samet</p>
+        <p className="mt-1 font-display text-lg italic text-soft">
+          {weddingData.displayDate}
         </p>
       </footer>
-
     </main>
   );
 }

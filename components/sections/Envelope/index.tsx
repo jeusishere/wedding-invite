@@ -1,134 +1,133 @@
 "use client";
 
-import React, { useState } from 'react';
-import { weddingData } from '../../../data/wedding';
+import { useEffect, useState } from "react";
+import { weddingData } from "@/data/wedding";
 
-// onOpen alanına ? ekleyerek opsiyonel yaptık
-interface EnvelopeProps {
-  onOpen?: () => void;
-}
+type Props = { onOpen?: () => void };
+type Step = "closed" | "opening" | "revealed";
 
-export default function Envelope({ onOpen }: EnvelopeProps) {
-  const [step, setStep] = useState<'closed' | 'opening' | 'card_revealed'>('closed');
+export default function Envelope({ onOpen }: Props) {
+  const [step, setStep] = useState<Step>("closed");
+  const opened = step !== "closed";
+
+  // Zarf açıkken arkadaki sayfa kaymasın
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const handleSealClick = () => {
-    if (step !== 'closed') return;
-
-    setStep('opening');
-
-    setTimeout(() => {
-      setStep('card_revealed');
-    }, 700);
+    if (step !== "closed") return;
+    setStep("opening");
+    setTimeout(() => setStep("revealed"), 1200);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#141414] bg-opacity-95 backdrop-blur-md px-4 overflow-hidden">
-      <div className="relative w-full max-w-md flex flex-col items-center">
-        
-        {/* ZARF & DAVETİYE ALANI */}
-        <div className="relative w-full aspect-[4/3] flex items-center justify-center perspective-1000">
-          
-          {/* İÇ DAVETİYE KARTI */}
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto"
+      style={{
+        background:
+          "radial-gradient(ellipse at 50% 30%, #efe2d3, #f8f0e7 70%)",
+      }}
+    >
+      <div
+        className="flex min-h-full flex-col items-center justify-center px-5"
+        style={{
+          paddingTop: "max(2.5rem, env(safe-area-inset-top))",
+          paddingBottom: "max(2.5rem, env(safe-area-inset-bottom))",
+        }}
+      >
+        <div className="relative mb-28 mt-36 aspect-[4/3] w-full max-w-[340px]">
+          {/* Zarf arka yüzü */}
+          <div className="absolute inset-0 z-0 rounded-sm border border-gold/40 bg-sand shadow-xl" />
+
+          {/* İç kart */}
           <div
-            className={`w-full h-full bg-[#fffdfa] border border-[#d4af37]/40 rounded-lg p-6 shadow-2xl flex flex-col items-center justify-center text-center transition-all duration-1000 ease-in-out z-10 ${
-              step === 'closed'
-                ? 'opacity-0 scale-90 translate-y-4 pointer-events-none'
-                : step === 'opening'
-                ? 'opacity-50 scale-95 translate-y-0'
-                : 'opacity-100 scale-105 -translate-y-2 shadow-2xl'
-            }`}
+            className="absolute inset-3 z-10 flex flex-col items-center justify-center border border-gold/50 bg-cream px-4 text-center shadow-md transition-transform duration-1000 ease-out"
+            style={{
+              transform: opened ? "translateY(-62%)" : "translateY(0)",
+              transitionDelay: opened ? "500ms" : "0ms",
+            }}
           >
-            <div className="w-12 h-[1px] bg-[#D4AF37] mb-3" />
-
-            <h1 className="font-serif text-2xl sm:text-3xl text-[#1a1a1a] tracking-wide">
-              {weddingData.bride}
-            </h1>
-            <span className="font-serif text-lg text-[#D4AF37] my-0.5">&amp;</span>
-            <h1 className="font-serif text-2xl sm:text-3xl text-[#1a1a1a] tracking-wide mb-2">
-              {weddingData.groom}
-            </h1>
-
-            <p className="text-xs text-[#766e65] tracking-widest uppercase mb-3 font-semibold">
+            <p className="font-display text-sm italic text-soft">
+              Düğün davetiyesi
+            </p>
+            <p className="mt-1 font-script text-4xl leading-none text-wine">
+              Hatice
+            </p>
+            <p className="font-script text-2xl text-gold">&amp;</p>
+            <p className="font-script text-4xl leading-none text-wine">
+              Samet
+            </p>
+            <p className="mt-2 font-display text-base text-ink">
               {weddingData.displayDate}
             </p>
-
-            <p className="font-serif italic text-xs text-[#555] max-w-xs">
-              "Hayatımızın en özel gününde..."
-            </p>
-
-            <div className="w-12 h-[1px] bg-[#D4AF37] mt-3" />
           </div>
 
-          {/* Dış Zarf Gövdesi */}
-          {step !== 'card_revealed' && (
-            <div className="absolute inset-0 bg-[#f3efe6] border border-[#dcd5c5] rounded-lg shadow-2xl overflow-hidden pointer-events-none z-20">
-              <div 
-                className="absolute inset-0 bg-[#ebe5d8]"
-                style={{ clipPath: 'polygon(0 100%, 50% 45%, 100% 100%)' }}
-              />
-              <div 
-                className="absolute inset-0 bg-[#e4dccf]"
-                style={{ clipPath: 'polygon(0 0, 45% 50%, 0 100%)' }}
-              />
-              <div 
-                className="absolute inset-0 bg-[#e4dccf]"
-                style={{ clipPath: 'polygon(100% 0, 100% 100%, 55% 50%)' }}
-              />
+          {/* Zarf cepleri */}
+          <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-sm">
+            <div
+              className="absolute inset-0 bg-[#e6d6c2]"
+              style={{ clipPath: "polygon(0 100%, 50% 45%, 100% 100%)" }}
+            />
+            <div
+              className="absolute inset-0 bg-[#ecdfcd]"
+              style={{ clipPath: "polygon(0 0, 45% 50%, 0 100%)" }}
+            />
+            <div
+              className="absolute inset-0 bg-[#ecdfcd]"
+              style={{ clipPath: "polygon(100% 0, 100% 100%, 55% 50%)" }}
+            />
+          </div>
 
-              {/* Zarf Üst Kapağı */}
-              <div
-                className={`absolute top-0 left-0 w-full h-full bg-[#f8f5ee] border-b border-[#d4af37]/30 origin-top transition-transform duration-700 ease-in-out ${
-                  step === 'opening' ? '[transform:rotateX(180deg)] z-0' : 'z-30'
-                }`}
-                style={{ clipPath: 'polygon(0 0, 100% 0, 50% 55%)' }}
-              />
-            </div>
-          )}
+          {/* Üst kapak */}
+          <div
+            className="pointer-events-none absolute inset-0 origin-top bg-[#f3e8d9] transition-transform duration-700 ease-in-out"
+            style={{
+              clipPath: "polygon(0 0, 100% 0, 50% 55%)",
+              transform: opened ? "rotateX(180deg)" : "rotateX(0deg)",
+              zIndex: opened ? 5 : 30,
+            }}
+          />
 
-          {/* ALTIN MÜHÜR */}
-          {step === 'closed' && (
-            <button
-              onClick={handleSealClick}
-              className="absolute z-40 transform hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none group flex flex-col items-center"
-              title="Davetiyeyi Açmak İçin Tıklayın"
-            >
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#F4D068] via-[#D4AF37] to-[#AA7C11] border-2 border-[#FFF8DC] shadow-[0_4px_15px_rgba(212,175,55,0.4)] flex items-center justify-center text-[#3a2e10] font-serif font-bold text-lg tracking-wider group-hover:brightness-110 transition-all">
-                <span>H&amp;S</span>
-              </div>
-              <span className="mt-3 text-xs tracking-widest text-[#D4AF37] bg-black/60 px-3 py-1 rounded-full border border-[#D4AF37]/30 uppercase font-medium">
-                Mühüre Tıkla
-              </span>
-            </button>
-          )}
+          {/* Mühür */}
+          <button
+            type="button"
+            onClick={handleSealClick}
+            aria-label="Davetiyeyi aç"
+            className={`absolute left-1/2 top-[55%] z-40 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-display text-xl font-semibold text-glow transition-all duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold ${
+              opened ? "scale-0 opacity-0" : "pulse-seal"
+            }`}
+            style={{
+              background:
+                "radial-gradient(circle at 35% 30%, #a63248, #5b1a2b 60%, #3d0f1c)",
+              boxShadow:
+                "0 8px 22px rgba(91,26,43,.45), inset 0 0 0 4px rgba(255,255,255,.08)",
+            }}
+          >
+            H&amp;S
+          </button>
 
-        </div>
-
-        {/* Giriş Butonu (onOpen?.() ile güvenli çağrılıyor) */}
-        {step === 'card_revealed' && (
-          <div className="mt-8 flex flex-col items-center animate-fade-in">
-            <button
-              onClick={() => onOpen?.()}
-              className="flex flex-col items-center gap-2 text-[#D4AF37] hover:text-white transition-colors cursor-pointer group focus:outline-none"
-            >
-              <span className="text-xs font-semibold tracking-widest uppercase">
-                Davetiyeye Giriş Yap
-              </span>
-              <svg
-                className="w-6 h-6 animate-bounce stroke-current"
-                fill="none"
-                viewBox="0 0 24 24"
+          {/* Alt yazı / giriş düğmesi */}
+          <div className="absolute left-1/2 top-full mt-10 -translate-x-1/2 whitespace-nowrap text-center">
+            {step === "closed" && (
+              <p className="font-display text-lg italic text-soft">
+                Mühüre dokunun
+              </p>
+            )}
+            {step === "revealed" && (
+              <button
+                type="button"
+                onClick={() => onOpen?.()}
+                className="rounded-full bg-wine px-8 py-3 font-body text-sm tracking-wide text-cream shadow-lg transition active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                />
-              </svg>
-            </button>
+                Davetiyeye gir
+              </button>
+            )}
           </div>
-        )}
-
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,17 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { weddingData } from '@/data/wedding';
+import { useEffect, useState } from "react";
+import { weddingData } from "@/data/wedding";
+
+function calc(target: number) {
+  const diff = Math.max(0, target - Date.now());
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((diff % (1000 * 60)) / 1000),
+  };
+}
 
 export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState({
@@ -12,57 +22,31 @@ export default function Countdown() {
   });
 
   useEffect(() => {
-    const targetDate = new Date(weddingData.targetDate).getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        clearInterval(interval);
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((difference % (1000 * 60)) / 1000),
-      });
-    }, 1000);
-
+    const target = new Date(weddingData.targetDate).getTime();
+    const tick = () => setTimeLeft(calc(target));
+    tick();
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, []);
 
   const items = [
-    { label: 'GÜN', value: timeLeft.days },
-    { label: 'SAAT', value: timeLeft.hours },
-    { label: 'DAKİKA', value: timeLeft.minutes },
-    { label: 'SANİYE', value: timeLeft.seconds },
+    { label: "Gün", value: timeLeft.days },
+    { label: "Saat", value: timeLeft.hours },
+    { label: "Dakika", value: timeLeft.minutes },
+    { label: "Saniye", value: timeLeft.seconds },
   ];
 
   return (
-    <div className="flex items-center justify-center gap-2 sm:gap-4">
-      {items.map((item, index) => (
-        <React.Fragment key={item.label}>
-          <div className="flex flex-col items-center">
-            <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-[#FDFBF7] border border-[#C5A059]/40 flex items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:border-[#C5A059] transition-all duration-300">
-              <span className="text-lg sm:text-2xl font-serif font-semibold text-[#2C2C2C]">
-                {String(item.value).padStart(2, '0')}
-              </span>
-            </div>
-            <span className="text-[9px] sm:text-[10px] text-[#C5A059] font-medium tracking-widest mt-2">
-              {item.label}
-            </span>
+    <div className="mx-auto mt-8 grid max-w-md grid-cols-4 divide-x divide-gold/40">
+      {items.map((item) => (
+        <div key={item.label} className="px-1 text-center">
+          <div className="font-display text-4xl font-medium tabular-nums text-cream sm:text-6xl">
+            {String(item.value).padStart(2, "0")}
           </div>
-
-          {/* İki Nokta Üst Üste Ayraçlar */}
-          {index < items.length - 1 && (
-            <span className="text-[#C5A059]/60 font-serif text-sm sm:text-lg mb-5 select-none">
-              :
-            </span>
-          )}
-        </React.Fragment>
+          <div className="mt-1 font-display text-base italic text-glow">
+            {item.label}
+          </div>
+        </div>
       ))}
     </div>
   );
