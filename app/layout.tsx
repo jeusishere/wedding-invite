@@ -21,19 +21,25 @@ const jost = Jost({
   weight: ["300", "400", "500"],
 });
 
+const deploymentHost =
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (deploymentHost ? `https://${deploymentHost}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL(siteUrl),
   title: "Hatice Kübra & Samet Baki",
   description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
   openGraph: {
     title: "Hatice Kübra & Samet Baki",
     description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
-    url: "https://example.com",
+    url: siteUrl,
     siteName: "Hatice Kübra & Samet Baki",
     type: "website",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Hatice Kübra & Samet Baki",
@@ -44,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Hatice Kübra & Samet Baki",
     description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
-    images: ["/og-image.svg"],
+    images: ["/opengraph-image"],
   },
 };
 
