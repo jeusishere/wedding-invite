@@ -153,7 +153,10 @@ export default function Hero() {
               text-[#55504A]
             "
           >
-            {weddingData.displayDate}
+            <span className="block">{weddingData.displayDate}</span>
+            <span className="block text-sm italic tracking-normal sm:text-base">
+              {weddingData.displayDay}
+            </span>
           </span>
 
         </div>

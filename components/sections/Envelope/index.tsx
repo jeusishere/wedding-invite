@@ -64,6 +64,9 @@ export default function Envelope({ onOpen }: Props) {
             <p className="mt-2 font-display text-base text-ink">
               {weddingData.displayDate}
             </p>
+            <p className="font-display text-sm italic text-soft">
+              {weddingData.displayDay}
+            </p>
           </div>
 
           {/* Zarf cepleri */}

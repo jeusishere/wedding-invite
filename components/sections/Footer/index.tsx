@@ -110,6 +110,9 @@ export default function Footer() {
         >
           {weddingData.displayDate}
         </p>
+        <p className="text-sm italic text-[#8A8379]">
+          {weddingData.displayDay}
+        </p>
 
         {/* Mesaj */}
 

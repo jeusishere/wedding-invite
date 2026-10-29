@@ -21,6 +21,7 @@ export interface WeddingData {
   time: string;
   venue: string;
   displayDate: string;
+  displayDay: string;
   displayTime: string;
   targetDate: string;
   wedding: EventDetails;
@@ -39,20 +40,21 @@ export const weddingData: WeddingData = {
   groom: "Samet Baki Tokur",
 
   // Genel Saat ve Mekan (Üst Seviye)
-  time: "18.00",
+  time: "17.30",
   venue: "Şahinbey Kongre Ve Sanat Merkezi Şehreküstü Salonu",
   displayDate: "15 Kasım 2026",
-  displayTime: "18.00",
-  targetDate: "2026-11-15T18:00:00+03:00",
+  displayDay: "Pazar",
+  displayTime: "17.30",
+  targetDate: "2026-11-15T17:30:00+03:00",
 
   // Nikah Detayları
   wedding: {
     title: "Nikah",
     displayDate: "15 Kasım 2026",
-    displayTime: "18.00",
-    time: "18.00",
+    displayTime: "17.30",
+    time: "17.30",
     venue: "Şahinbey Kongre Ve Sanat Merkezi Şehreküstü Salonu",
-    targetDate: "2026-11-15T18:00:00+03:00",
+    targetDate: "2026-11-15T17:30:00+03:00",
   },
 
   // Kına Gecesi Bilgileri

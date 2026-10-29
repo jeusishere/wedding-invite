@@ -49,6 +49,9 @@ export default function WeddingPage() {
           <p className="font-display text-2xl text-ink sm:text-3xl">
             {weddingData.displayDate}
           </p>
+          <p className="font-display text-lg italic text-soft">
+            {weddingData.displayDay}
+          </p>
           <p className="font-display text-xl italic text-soft">
             saat {weddingData.displayTime}
           </p>
@@ -96,6 +99,9 @@ export default function WeddingPage() {
         </p>
         <p className="mt-1 font-display text-lg italic text-soft">
           {weddingData.displayDate}
+        </p>
+        <p className="font-display text-base italic text-soft">
+          {weddingData.displayDay}
         </p>
       </footer>
     </main>

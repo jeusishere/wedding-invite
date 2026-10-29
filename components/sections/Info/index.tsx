@@ -147,6 +147,9 @@ export default function Info() {
             >
               {weddingData.displayDate}
             </h3>
+            <p className="mt-1 font-serif text-base italic text-[#8A8379]">
+              {weddingData.displayDay}
+            </p>
           </div>
 
 
