@@ -1,4 +1,6 @@
 const guestCounts = new Set(["1", "2", "3", "4+"]);
+const defaultScriptUrl =
+  "https://script.google.com/macros/s/AKfycbw-ld3jd0Zx4ByN5T-4g0RMOgBA7DtqJach_24G_3xsxu9pIgw07hbgnNmx5NLdUP0r/exec";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -40,7 +42,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Notunuz en fazla 500 karakter olabilir." }, { status: 400 });
   }
 
-  const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+  const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL ?? defaultScriptUrl;
   const sharedSecret = process.env.RSVP_SHARED_SECRET;
   if (!scriptUrl || !sharedSecret) {
     return Response.json(
