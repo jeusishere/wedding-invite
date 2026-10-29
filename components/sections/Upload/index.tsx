@@ -8,6 +8,7 @@ export default function Upload() {
   const [previews, setPreviews] = useState<string[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [uploadError, setUploadError] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -29,6 +30,7 @@ export default function Upload() {
 
     setUploading(true);
     setSuccess(false);
+    setUploadError("");
 
     try {
       const uploadPromises = selectedFiles.map(async (file) => {
@@ -39,7 +41,7 @@ export default function Upload() {
           weddingData.cloudinary?.uploadPreset || "wedding_preset"
         );
 
-        const res = await fetch(
+        const response = await fetch(
           `https://api.cloudinary.com/v1_1/${weddingData.cloudinary?.cloudName || "demo"}/image/upload`,
           {
             method: "POST",
@@ -47,8 +49,21 @@ export default function Upload() {
           }
         );
 
-        if (!res.ok) throw new Error("Yükleme başarısız");
-        return await res.json();
+        const result = (await response.json()) as {
+          error?: { message?: string };
+        };
+
+        if (!response.ok) {
+          const providerMessage = result.error?.message ?? "Bilinmeyen yükleme hatası.";
+          if (providerMessage.includes("whitelisted for unsigned uploads")) {
+            throw new Error(
+              "Cloudinary'de ml_default yükleme preset'ini unsigned (imzasız) olarak etkinleştirin.",
+            );
+          }
+          throw new Error(providerMessage);
+        }
+
+        return result;
       });
 
       await Promise.all(uploadPromises);
@@ -57,8 +72,11 @@ export default function Upload() {
       setSelectedFiles([]);
       setPreviews([]);
     } catch (error) {
-      console.error("Yükleme hatası:", error);
-      alert("Fotoğraflar yüklenirken bir sorun oluştu.");
+      setUploadError(
+        error instanceof Error
+          ? error.message
+          : "Fotoğraflar yüklenirken bir sorun oluştu.",
+      );
     } finally {
       setUploading(false);
     }
@@ -127,6 +145,12 @@ export default function Upload() {
         >
           {uploading ? "Yükleniyor..." : `${selectedFiles.length} fotoğrafı yükle`}
         </button>
+      )}
+
+      {uploadError && (
+        <p role="alert" className="mx-auto mt-4 max-w-sm text-sm text-wine">
+          Fotoğraflar yüklenemedi: {uploadError}
+        </p>
       )}
 
       {success && (
