@@ -1,6 +1,24 @@
 const SPREADSHEET_ID = "1k0ewgaVQhq0LcXUF1TBTwpcKKAJ2_epRodi6HO8IlWo";
 const SHEET_GID = 0;
 
+function doGet() {
+  const expectedSecret = PropertiesService.getScriptProperties().getProperty(
+    "RSVP_SHARED_SECRET",
+  );
+
+  if (!expectedSecret) {
+    return jsonOutput({ ok: false, code: "secret_missing" });
+  }
+
+  try {
+    return getTargetSheet()
+      ? jsonOutput({ ok: true, code: "ready" })
+      : jsonOutput({ ok: false, code: "spreadsheet_not_found" });
+  } catch (error) {
+    return jsonOutput({ ok: false, code: "spreadsheet_access_denied" });
+  }
+}
+
 function doPost(e) {
   try {
     const payload = JSON.parse(e.postData.contents);
@@ -9,7 +27,10 @@ function doPost(e) {
     );
 
     if (!expectedSecret || payload.secret !== expectedSecret) {
-      return jsonOutput({ ok: false });
+      return jsonOutput({
+        ok: false,
+        code: expectedSecret ? "unauthorized" : "secret_missing",
+      });
     }
 
     if (
@@ -17,16 +38,13 @@ function doPost(e) {
       typeof payload.lastName !== "string" ||
       (payload.attendance !== "yes" && payload.attendance !== "no")
     ) {
-      return jsonOutput({ ok: false });
+      return jsonOutput({ ok: false, code: "invalid_payload" });
     }
 
-    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-    const sheet = spreadsheet
-      .getSheets()
-      .find((candidate) => candidate.getSheetId() === SHEET_GID);
+    const sheet = getTargetSheet();
 
     if (!sheet) {
-      return jsonOutput({ ok: false });
+      return jsonOutput({ ok: false, code: "spreadsheet_not_found" });
     }
 
     if (sheet.getLastRow() === 0) {
@@ -51,8 +69,14 @@ function doPost(e) {
 
     return jsonOutput({ ok: true });
   } catch (error) {
-    return jsonOutput({ ok: false });
+    return jsonOutput({ ok: false, code: "append_failed" });
   }
+}
+
+function getTargetSheet() {
+  return SpreadsheetApp.openById(SPREADSHEET_ID)
+    .getSheets()
+    .find((candidate) => candidate.getSheetId() === SHEET_GID);
 }
 
 function safeCell(value) {

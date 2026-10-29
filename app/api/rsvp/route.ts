@@ -1,4 +1,12 @@
 const guestCounts = new Set(["1", "2", "3", "4+"]);
+const scriptErrors: Record<string, string> = {
+  secret_missing: "Apps Script'te RSVP_SHARED_SECRET tanımlı değil.",
+  unauthorized: "Apps Script ve Vercel RSVP_SHARED_SECRET değerleri eşleşmiyor.",
+  spreadsheet_not_found: "Google Sheet'te gid=0 sekmesi bulunamadı.",
+  spreadsheet_access_denied: "Apps Script'in Google Sheet erişimini kontrol edin.",
+  invalid_payload: "Form verileri Apps Script tarafından kabul edilmedi.",
+  append_failed: "Apps Script satırı tabloya ekleyemedi.",
+};
 const defaultScriptUrl =
   "https://script.google.com/macros/s/AKfycbyl3btruIJYxPMidN-q4_28rH1MgRfDwFhHzGQq1epMu7IXF8vVZ6iM7hLsb_KlXEYu/exec";
 
@@ -75,11 +83,27 @@ export async function POST(request: Request) {
       }),
       signal: AbortSignal.timeout(12000),
     });
-    const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
+    const responseText = await response.text();
+    let result: { ok?: boolean; code?: string } | null = null;
+    try {
+      result = JSON.parse(responseText) as { ok?: boolean; code?: string };
+    } catch {
+      result = null;
+    }
 
     if (!response.ok || result?.ok !== true) {
+      const code = result?.code ?? "invalid_response";
+      console.error("RSVP Apps Script rejected request", {
+        status: response.status,
+        contentType: response.headers.get("content-type"),
+        code,
+      });
       return Response.json(
-        { error: "Yanıtınız tabloya kaydedilemedi. Lütfen tekrar deneyin." },
+        {
+          error:
+            scriptErrors[code] ??
+            "Apps Script geçerli yanıt vermedi. Web uygulamasını yeni sürüm olarak dağıtın.",
+        },
         { status: 502 },
       );
     }
