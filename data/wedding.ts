@@ -40,18 +40,18 @@ export const weddingData: WeddingData = {
 
   // Genel Saat ve Mekan (Üst Seviye)
   time: "18.00",
-  venue: "Akkent Kültür ve Kongre Merkezi",
+  venue: "Şahinbey Kongre Ve Sanat Merkezi Şehreküstü Salonu",
   displayDate: "15 Kasım 2026",
   displayTime: "18.00",
   targetDate: "2026-11-15T18:00:00+03:00",
 
-  // Düğün Detayları
+  // Nikah Detayları
   wedding: {
-    title: "Düğün",
+    title: "Nikah",
     displayDate: "15 Kasım 2026",
     displayTime: "18.00",
     time: "18.00",
-    venue: "Akkent Kültür ve Kongre Merkezi",
+    venue: "Şahinbey Kongre Ve Sanat Merkezi Şehreküstü Salonu",
     targetDate: "2026-11-15T18:00:00+03:00",
   },
 
@@ -67,11 +67,13 @@ export const weddingData: WeddingData = {
 
   // Mekan Bilgileri
   location: {
-    name: "Akkent Kültür ve Kongre Merkezi",
-    venue: "Akkent Kültür ve Kongre Merkezi",
-    address: "Karataş, Park İçi Yolu, 27470 Şahinbey / Gaziantep",
-    mapsUrl: "https://maps.app.goo.gl/TPS6Tes8caZHD6gP6",
-    embedUrl: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3824.6203887064494!2d37.3580306!3d37.0145452!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e1b4d83c90d9%3A0x2cff6a079b4a35b4!2sAkkent%20K%C3%BClt%C3%BCr%20ve%20Kongre%20Merkezi!5e1!3m2!1str!2str!4v1786434347840!5m2!1str!2str",
+    name: "Şahinbey Kongre Ve Sanat Merkezi",
+    venue: "Şahinbey Kongre Ve Sanat Merkezi Şehreküstü Salonu",
+    address: "Şehreküstü Salonu",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=%C5%9Eahinbey+Kongre+Ve+Sanat+Merkezi+%C5%9Eehrek%C3%BCst%C3%BC+Salonu",
+    embedUrl:
+      "https://www.google.com/maps?q=%C5%9Eahinbey%20Kongre%20Ve%20Sanat%20Merkezi%20%C5%9Eehrek%C3%BCst%C3%BC%20Salonu&output=embed",
   },
 
   // Cloudinary Ayarları

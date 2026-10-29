@@ -36,7 +36,7 @@ export default function Rsvp() {
       <div className="text-center">
         <h2 className="font-script text-5xl text-wine">Yanıtınız</h2>
         <p className="mt-2 font-display text-lg italic text-soft">
-          Lütfen katılım durumunuzu düğün tarihinden önce bildirin.
+          Lütfen katılım durumunuzu nikah tarihinden önce bildirin.
         </p>
       </div>
 

@@ -22,8 +22,30 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://example.com"),
   title: "Hatice Kübra & Samet Baki",
-  description: "Hatice Kübra Özcan ve Samet Baki Tokur düğün davetiyesi",
+  description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
+  openGraph: {
+    title: "Hatice Kübra & Samet Baki",
+    description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
+    url: "https://example.com",
+    siteName: "Hatice Kübra & Samet Baki",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "Hatice Kübra & Samet Baki",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hatice Kübra & Samet Baki",
+    description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
+    images: ["/og-image.svg"],
+  },
 };
 
 export const viewport: Viewport = {

@@ -52,7 +52,7 @@ export default function Envelope({ onOpen }: Props) {
             }}
           >
             <p className="font-display text-sm italic text-soft">
-              Düğün davetiyesi
+              Nikah davetiyesi
             </p>
             <p className="mt-1 font-script text-4xl leading-none text-wine">
               Hatice

@@ -80,7 +80,7 @@ export default function Hero() {
             text-[#8A847B]
           "
         >
-          Düğün Davetiyesi
+          Nikah Davetiyesi
         </p>
 
         {/* İsimler */}
@@ -88,12 +88,12 @@ export default function Hero() {
 
           <h1
             className="
-              font-serif
+              font-body
               text-3xl
               sm:text-5xl
               md:text-6xl
-              font-light
-              tracking-wide
+              font-medium
+              tracking-[0.08em]
               text-[#2D2A26]
             "
           >
@@ -122,12 +122,12 @@ export default function Hero() {
 
           <h1
             className="
-              font-serif
+              font-body
               text-3xl
               sm:text-5xl
               md:text-6xl
-              font-light
-              tracking-wide
+              font-medium
+              tracking-[0.08em]
               text-[#2D2A26]
             "
           >
@@ -196,7 +196,7 @@ export default function Hero() {
             hover:text-[#A98236]
             focus:outline-none
           "
-          aria-label="Düğün detaylarını keşfet"
+          aria-label="Nikah detaylarını keşfet"
         >
 
           <span

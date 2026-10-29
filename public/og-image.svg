@@ -1,0 +1,10 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#FAF5EC"/>
+  <rect x="80" y="80" width="1040" height="470" rx="28" fill="#FFFDF9" stroke="#E8D7B0" stroke-width="3"/>
+  <rect x="120" y="120" width="960" height="2" fill="#C8A96A"/>
+  <text x="600" y="220" text-anchor="middle" fill="#B8894C" font-size="26" font-family="Georgia, serif" letter-spacing="8">NIKAH DAVETİYESİ</text>
+  <text x="600" y="330" text-anchor="middle" fill="#2D2A26" font-size="68" font-family="Georgia, serif" font-weight="600">Hatice Kübra</text>
+  <text x="600" y="420" text-anchor="middle" fill="#2D2A26" font-size="76" font-family="Georgia, serif" font-weight="600">&amp;</text>
+  <text x="600" y="500" text-anchor="middle" fill="#2D2A26" font-size="68" font-family="Georgia, serif" font-weight="600">Samet Baki</text>
+  <rect x="120" y="520" width="960" height="2" fill="#E8D7B0"/>
+</svg>

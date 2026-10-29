@@ -69,7 +69,7 @@ export default function Info() {
               sm:text-5xl
             "
           >
-            Düğün Bilgileri
+            Nikah Bilgileri
           </h2>
 
         </div>

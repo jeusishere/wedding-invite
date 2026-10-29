@@ -68,8 +68,8 @@ export default function Upload() {
     <div className="text-center">
       <h2 className="font-script text-5xl text-wine">Anılarınızı paylaşın</h2>
       <p className="mx-auto mt-2 max-w-sm font-display text-lg italic text-soft">
-        Düğünümüzden veya nişanımızdan çektiğiniz güzel anları bizimle
-        paylaşabilirsiniz.
+        Nikahımızdan veya özel anlarımızdan çektiğiniz güzel fotoğrafları
+        bizimle paylaşabilirsiniz.
       </p>
 
       <label className="mt-6 inline-flex cursor-pointer items-center gap-2 border border-wine px-6 py-3 text-sm tracking-wide text-wine transition active:scale-95 hover:bg-wine hover:text-cream">
