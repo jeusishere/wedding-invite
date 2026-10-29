@@ -23,12 +23,34 @@ export default function Rsvp() {
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // NOT: Mevcut davranış korundu. Yanıt şu an sadece ekranda teşekkür gösteriyor.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    setTimeout(() => setStatus("success"), 800);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "Yanıtınız gönderilemedi.");
+      }
+
+      setStatus("success");
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Yanıt gönderilirken bir hata oluştu.",
+      );
+      setStatus("error");
+    }
   };
 
   return (
@@ -127,11 +149,10 @@ export default function Rsvp() {
           {status === "submitting" ? "Gönderiliyor..." : "Yanıtımı gönder"}
         </button>
 
-        {status === "success" && (
-          <p className="text-center font-display text-xl italic text-wine">
-            Yanıtınız bize ulaştı, teşekkür ederiz.
-          </p>
-        )}
+        <p aria-live="polite" className="text-center font-display text-xl italic text-wine">
+          {status === "success" && "Yanıtınız bize ulaştı, teşekkür ederiz."}
+          {status === "error" && errorMessage}
+        </p>
       </form>
     </div>
   );

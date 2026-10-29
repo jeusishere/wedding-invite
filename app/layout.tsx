@@ -1,24 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Parisienne, Jost } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
-});
-
-const parisienne = Parisienne({
-  variable: "--font-parisienne",
-  subsets: ["latin", "latin-ext"],
-  weight: "400",
-});
-
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500"],
 });
 
 const deploymentHost =
@@ -65,10 +53,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="tr"
-      className={`${cormorant.variable} ${parisienne.variable} ${jost.variable} antialiased`}
-    >
+    <html lang="tr" className={`${cormorant.variable} antialiased`}>
       <body className="min-h-screen bg-ivory text-ink font-body">{children}</body>
     </html>
   );

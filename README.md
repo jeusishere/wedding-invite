@@ -103,6 +103,16 @@ git push
 
 GitHub'a gönderilen değişiklikler, yapılandırılmışsa otomatik olarak yayınlanacaktır.
 
+## RSVP yanıtlarını Google Sheets'e aktarma
+
+1. Verilen tabloyu düzenleme yetkisi olan Google hesabıyla açın ve **Uzantılar > Apps Script** bölümüne gidin.
+2. `scripts/rsvp-google-sheets.gs` içeriğini Apps Script editörüne yapıştırın.
+3. Apps Script **Proje Ayarları > Komut dosyası özellikleri** bölümüne `RSVP_SHARED_SECRET` adında uzun, tahmin edilemez bir değer ekleyin.
+4. **Dağıt > Yeni dağıtım > Web uygulaması** seçin. Uygulamayı kendi hesabınız olarak çalıştırın ve erişimi **Herkes** yapın. Oluşan `/exec` URL'sini kopyalayın.
+5. Vercel proje ayarlarında aynı ortamlar için `GOOGLE_APPS_SCRIPT_URL` (kopyalanan `/exec` URL'si) ve `RSVP_SHARED_SECRET` (3. adımda belirlediğiniz aynı değer) değişkenlerini ekleyin ve yeniden dağıtım yapın.
+
+Yerel deneme için bu iki değişkeni `.env.local` dosyasına ekleyin. Form yanıtları verilen tablonun `gid=0` sekmesine tarih, ad, soyad, katılım, kişi sayısı ve not sütunlarıyla eklenir. İlk satır boşsa sütun başlıkları otomatik oluşturulur.
+
 ---
 
 ## 📅 Roadmap

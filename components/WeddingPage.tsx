@@ -46,13 +46,13 @@ export default function WeddingPage() {
         </p>
 
         <div className="mt-10 border-y border-gold/40 px-8 py-5">
-          <p className="font-display text-2xl text-ink sm:text-3xl">
+          <p className="font-display text-4xl text-ink sm:text-5xl">
             {weddingData.displayDate}
           </p>
-          <p className="font-display text-lg italic text-soft">
+          <p className="font-display text-2xl italic text-soft sm:text-3xl">
             {weddingData.displayDay}
           </p>
-          <p className="font-display text-xl italic text-soft">
+          <p className="font-display text-3xl italic text-soft sm:text-4xl">
             saat {weddingData.displayTime}
           </p>
         </div>

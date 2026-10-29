@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-script: var(--font-parisienne), cursive;
+  --font-script: var(--font-cormorant), Georgia, serif;
   --font-display: var(--font-cormorant), Georgia, serif;
-  --font-body: var(--font-jost), system-ui, sans-serif;
+  --font-body: var(--font-cormorant), Georgia, serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
 
   --color-ivory: #f8f0e7;
   --color-sand: #efe2d3;
