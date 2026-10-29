@@ -103,6 +103,14 @@ export default function WeddingPage() {
         <p className="font-display text-base italic text-soft">
           {weddingData.displayDay}
         </p>
+        <a
+          href="https://docs.google.com/spreadsheets/d/1k0ewgaVQhq0LcXUF1TBTwpcKKAJ2_epRodi6HO8IlWo/edit?gid=0#gid=0"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 inline-block text-xs text-soft/40 underline-offset-4 transition hover:text-soft hover:underline focus-visible:text-wine focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        >
+          Davetli listesi
+        </a>
       </footer>
     </main>
   );
