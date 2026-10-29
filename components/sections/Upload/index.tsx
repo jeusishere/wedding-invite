@@ -66,7 +66,7 @@ export default function Upload() {
 
   return (
     <div className="text-center">
-      <h2 className="font-script text-5xl text-wine">Anılarınızı paylaşın</h2>
+      <h2 className="font-display text-4xl font-medium text-wine">Anılarınızı paylaşın</h2>
       <p className="mx-auto mt-2 max-w-sm font-display text-lg italic text-soft">
         Nikahımızdan veya özel anlarımızdan çektiğiniz güzel fotoğrafları
         bizimle paylaşabilirsiniz.

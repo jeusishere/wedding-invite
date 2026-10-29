@@ -4,7 +4,7 @@ import { weddingData } from "@/data/wedding";
 export default function Location() {
   return (
     <div className="mx-auto w-full max-w-2xl text-center">
-      <h2 className="font-body text-3xl tracking-[0.08em] text-wine sm:text-5xl">
+      <h2 className="font-display text-4xl font-medium text-wine sm:text-5xl">
         Nikah mekanı
       </h2>
       <h3 className="mt-3 font-display text-2xl font-semibold text-ink">

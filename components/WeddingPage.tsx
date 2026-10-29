@@ -22,9 +22,9 @@ export default function WeddingPage() {
           Sizleri aramızda görmekten mutluluk duyarız
         </p>
 
-        <h1 className="mt-8 text-balance font-body text-4xl leading-[1.2] tracking-[0.08em] text-wine sm:text-6xl">
+        <h1 className="mt-8 text-balance font-display text-4xl font-medium leading-[1.15] tracking-[0.02em] text-wine sm:text-6xl">
           <span className="block">{weddingData.bride}</span>
-          <span className="my-1 block text-3xl tracking-[0.18em] text-gold">&amp;</span>
+          <span className="my-1 block text-3xl font-normal italic tracking-normal text-gold">&amp;</span>
           <span className="block">{weddingData.groom}</span>
         </h1>
 
@@ -51,7 +51,7 @@ export default function WeddingPage() {
 
       {/* 3. Geri sayım */}
       <section className="bg-wine px-6 py-16 text-center">
-        <h2 className="font-body text-3xl tracking-[0.08em] text-glow sm:text-5xl">
+        <h2 className="font-display text-4xl font-medium text-glow sm:text-5xl">
           Nikahımıza kalan süre
         </h2>
         <Countdown />
@@ -81,7 +81,7 @@ export default function WeddingPage() {
         className="px-6 pt-14 text-center"
         style={{ paddingBottom: "max(3.5rem, env(safe-area-inset-bottom))" }}
       >
-        <p className="font-body text-3xl tracking-[0.08em] text-wine sm:text-4xl">
+        <p className="font-display text-3xl font-medium text-wine sm:text-4xl">
           Hatice &amp; Samet
         </p>
         <p className="mt-1 font-display text-lg italic text-soft">
