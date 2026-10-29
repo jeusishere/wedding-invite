@@ -1,6 +1,6 @@
 const guestCounts = new Set(["1", "2", "3", "4+"]);
 const defaultScriptUrl =
-  "https://script.google.com/macros/s/AKfycbw-ld3jd0Zx4ByN5T-4g0RMOgBA7DtqJach_24G_3xsxu9pIgw07hbgnNmx5NLdUP0r/exec";
+  "https://script.google.com/macros/s/AKfycbyl3btruIJYxPMidN-q4_28rH1MgRfDwFhHzGQq1epMu7IXF8vVZ6iM7hLsb_KlXEYu/exec";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
