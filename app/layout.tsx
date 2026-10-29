@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
+        url: "/whatsapp-preview.jpg",
+        width: 1080,
+        height: 1424,
         alt: "Hatice Kübra & Samet Baki",
       },
     ],
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Hatice Kübra & Samet Baki",
     description: "Hatice Kübra Özcan ve Samet Baki Tokur nikah davetiyesi",
-    images: ["/opengraph-image"],
+    images: ["/whatsapp-preview.jpg"],
   },
 };
 
