@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Pinyon_Script, Jost } from "next/font/google";
+import { Cormorant_Garamond, Parisienne, Jost } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -9,8 +9,8 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
-const pinyon = Pinyon_Script({
-  variable: "--font-pinyon",
+const parisienne = Parisienne({
+  variable: "--font-parisienne",
   subsets: ["latin", "latin-ext"],
   weight: "400",
 });
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${cormorant.variable} ${pinyon.variable} ${jost.variable} antialiased`}
+      className={`${cormorant.variable} ${parisienne.variable} ${jost.variable} antialiased`}
     >
       <body className="min-h-screen bg-ivory text-ink font-body">{children}</body>
     </html>

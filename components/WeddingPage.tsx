@@ -22,10 +22,20 @@ export default function WeddingPage() {
           Sizleri aramızda görmekten mutluluk duyarız
         </p>
 
-        <h1 className="mt-8 text-balance font-display text-4xl font-medium leading-[1.15] tracking-[0.02em] text-wine sm:text-6xl">
-          <span className="block">{weddingData.bride}</span>
+        <h1 className="mt-8 text-balance text-wine">
+          <span className="block font-script text-5xl leading-tight sm:text-7xl">
+            {weddingData.bride.split(" ")[0]}
+          </span>
+          <span className="block font-display text-xl font-medium leading-tight tracking-[0.02em] sm:text-2xl">
+            {weddingData.bride.split(" ").slice(1).join(" ")}
+          </span>
           <span className="my-1 block text-3xl font-normal italic tracking-normal text-gold">&amp;</span>
-          <span className="block">{weddingData.groom}</span>
+          <span className="block font-script text-5xl leading-tight sm:text-7xl">
+            {weddingData.groom.split(" ")[0]}
+          </span>
+          <span className="block font-display text-xl font-medium leading-tight tracking-[0.02em] sm:text-2xl">
+            {weddingData.groom.split(" ").slice(1).join(" ")}
+          </span>
         </h1>
 
         <div className="orn my-10">❖</div>
@@ -81,7 +91,7 @@ export default function WeddingPage() {
         className="px-6 pt-14 text-center"
         style={{ paddingBottom: "max(3.5rem, env(safe-area-inset-bottom))" }}
       >
-        <p className="font-display text-3xl font-medium text-wine sm:text-4xl">
+        <p className="font-script text-4xl text-wine sm:text-5xl">
           Hatice &amp; Samet
         </p>
         <p className="mt-1 font-display text-lg italic text-soft">

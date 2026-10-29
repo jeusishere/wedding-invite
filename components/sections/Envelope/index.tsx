@@ -54,11 +54,11 @@ export default function Envelope({ onOpen }: Props) {
             <p className="font-display text-sm italic text-soft">
               Nikah davetiyesi
             </p>
-            <p className="mt-1 font-display text-4xl font-medium leading-none text-wine">
+            <p className="mt-1 font-script text-5xl leading-none text-wine">
               Hatice
             </p>
-            <p className="font-display text-2xl italic text-gold">&amp;</p>
-            <p className="font-display text-4xl font-medium leading-none text-wine">
+            <p className="font-script text-3xl text-gold">&amp;</p>
+            <p className="font-script text-5xl leading-none text-wine">
               Samet
             </p>
             <p className="mt-2 font-display text-base text-ink">

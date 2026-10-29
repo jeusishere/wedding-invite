@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-script: var(--font-pinyon), cursive;
+  --font-script: var(--font-parisienne), cursive;
   --font-display: var(--font-cormorant), Georgia, serif;
   --font-body: var(--font-jost), system-ui, sans-serif;
 
